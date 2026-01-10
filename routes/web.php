@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnrollmentController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +53,9 @@ Route::get('/contact', function () {
 // 9. Enrollment Form
 Route::get('/apply', [EnrollmentController::class, 'index'])->name('apply.form');
 Route::post('/apply', [EnrollmentController::class, 'store'])->name('apply.submit');
+
+// Admin Dashboard Route
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+// Delete Route (for cleaning up test data)
+Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');

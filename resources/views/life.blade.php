@@ -4,52 +4,81 @@
 
 @section('content')
 
-<div class="bg-brand-yellow py-24 text-center text-brand-dark">
-    <h1 class="text-5xl font-serif font-bold mb-6">Life at PCIS</h1>
-    <p class="text-xl font-light">Beyond the classroom: Sports, Arts, and Community.</p>
+<!-- HERO -->
+<div class="bg-brand-gold py-24 text-center text-brand-dark relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagonal-stripes.png')] opacity-10"></div>
+    <div class="relative z-10 max-w-[1400px] mx-auto px-4">
+        <h1 class="text-5xl md:text-7xl font-header font-bold mb-6">More Than Just a Classroom</h1>
+        <p class="text-xl md:text-2xl font-light">Sports, Arts, Leadership, and a community that feels like family.</p>
+    </div>
 </div>
 
-<div class="max-w-7xl mx-auto px-4 py-24">
-    <!-- Gallery Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-        <div class="h-80 relative group overflow-hidden rounded-2xl shadow-lg">
-            <img src="https://images.unsplash.com/photo-1564419434663-c49967363849?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute inset-0 bg-brand-blue/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <span class="text-white font-royal font-bold text-2xl">Sports</span>
+<!-- BENTO GRID GALLERY -->
+<div class="py-24 bg-white">
+    <div class="max-w-[1400px] mx-auto px-4">
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-[800px] md:h-[600px]">
+            
+            <!-- Large Item (Sports) -->
+            <div class="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl shadow-lg cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1564419434663-c49967363849?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-blue/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white font-header font-bold text-3xl mb-2">Varsity Sports</h3>
+                    <p class="text-blue-100 text-sm opacity-0 group-hover:opacity-100 transition duration-300 transform translate-y-4 group-hover:translate-y-0">Football, Basketball, Volleyball, and Swimming.</p>
+                </div>
             </div>
-        </div>
-        <div class="h-80 relative group overflow-hidden rounded-2xl shadow-lg mt-0 md:-mt-10"> <!-- Staggered Effect -->
-            <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute inset-0 bg-brand-red/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <span class="text-white font-royal font-bold text-2xl">Community</span>
-            </div>
-        </div>
-        <div class="h-80 relative group overflow-hidden rounded-2xl shadow-lg">
-            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-            <div class="absolute inset-0 bg-brand-yellow/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300">
-                <span class="text-brand-dark font-royal font-bold text-2xl">Arts & Music</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div>
-            <h2 class="text-4xl font-serif font-bold text-brand-dark mb-6">Holistic Development</h2>
-            <p class="text-gray-600 leading-relaxed mb-6 text-lg font-light">
-                We believe that a happy child learns best. Our campus life is vibrant, inclusive, and designed to help students discover their passions.
-            </p>
-            <a href="{{ route('apply.form') }}" class="text-brand-blue font-bold hover:underline">Join our community &rarr;</a>
+            <!-- Wide Item (Arts) -->
+            <div class="md:col-span-2 relative group overflow-hidden rounded-3xl shadow-lg cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-red/90 to-transparent flex flex-col justify-end p-8">
+                    <h3 class="text-white font-header font-bold text-2xl">Creative Arts</h3>
+                </div>
+            </div>
+
+            <!-- Small Item (Robotics) -->
+            <div class="relative group overflow-hidden rounded-3xl shadow-lg cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1581092921461-eab62e97a782?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-teal/90 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white font-header font-bold text-xl">Robotics</h3>
+                </div>
+            </div>
+
+            <!-- Small Item (Community) -->
+            <div class="relative group overflow-hidden rounded-3xl shadow-lg cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-brand-gold/90 to-transparent flex flex-col justify-end p-6">
+                    <h3 class="text-white font-header font-bold text-xl">Community</h3>
+                </div>
+            </div>
+
         </div>
-        <div class="bg-gray-50 p-10 rounded-3xl border-l-8 border-brand-yellow shadow-lg">
-            <h3 class="font-royal font-bold text-2xl mb-6 text-brand-dark">Student Clubs</h3>
-            <ul class="grid grid-cols-2 gap-4 text-sm text-gray-700 font-medium">
-                <li>🤖 Robotics Club</li>
-                <li>🗣️ Debate Team</li>
-                <li>🎵 Glee Club</li>
-                <li>⚽ Football Varsity</li>
-                <li>⚖️ Student Council</li>
-                <li>🌱 Eco-Warriors</li>
-            </ul>
+
+    </div>
+</div>
+
+<!-- CLUBS LIST -->
+<div class="py-20 bg-bg-secondary">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="text-4xl font-header font-bold text-brand-blue mb-12">Student Organizations</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center">
+                <span class="text-4xl mb-3">🗣️</span>
+                <span class="font-bold text-gray-700">Debate Team</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center">
+                <span class="text-4xl mb-3">🌱</span>
+                <span class="font-bold text-gray-700">Eco-Warriors</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center">
+                <span class="text-4xl mb-3">🎵</span>
+                <span class="font-bold text-gray-700">Glee Club</span>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition flex flex-col items-center">
+                <span class="text-4xl mb-3">♟️</span>
+                <span class="font-bold text-gray-700">Chess Club</span>
+            </div>
         </div>
     </div>
 </div>

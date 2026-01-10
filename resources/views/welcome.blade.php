@@ -4,111 +4,206 @@
 
 @section('content')
 
-<!-- HERO SECTION -->
-<div class="relative bg-brand-dark h-[85vh] flex items-center overflow-hidden">
-    <!-- Background -->
+<!-- HERO SECTION: Full Screen Video/Image Style -->
+<div class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+    
+    <!-- Background Image (Students in Lab - Matches your screenshot vibe) -->
     <div class="absolute inset-0 z-0">
-        <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" class="w-full h-full object-cover opacity-40" alt="School Campus">
-        <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-r from-brand-blue via-brand-blue/80 to-transparent"></div>
+        <img src="https://images.unsplash.com/photo-1564951434112-64d74cc2a2d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" 
+             class="w-full h-full object-cover" 
+             alt="Future Ready Students">
+        
+        <!-- HIMAY Rule: Overlay to ensure text readability against busy background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70"></div>
     </div>
     
-    <div class="relative z-10 max-w-7xl mx-auto px-4 w-full pt-10">
-        <!-- Badge -->
-        <div class="inline-block mb-8 animate-fade-in-up">
-            <span class="bg-brand-yellow text-brand-blue font-extrabold tracking-widest uppercase text-xs py-3 px-6 rounded-full shadow-glow border border-white/20">
-                Admissions Open 2024-2025
-            </span>
-        </div>
+    <!-- Content Center -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 w-full text-center mt-16">
         
-        <!-- Headline -->
-        <h1 class="text-5xl md:text-7xl font-serif font-bold text-white leading-tight mb-8 drop-shadow-2xl">
-            Unity. Integrity. <br> 
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-yellow to-brand-red">Growth.</span>
+        <!-- Headline: Warm Gold (#F4A300) per HIMAY for Optimism/Prestige -->
+        <h1 class="font-header font-bold text-4xl md:text-6xl lg:text-7xl text-brand-gold uppercase tracking-wide leading-tight mb-6 drop-shadow-2xl">
+            Future-Ready Education <br> With Global Standard
         </h1>
         
-        <!-- Subheadline -->
-        <p class="text-lg md:text-xl text-blue-50 mb-12 max-w-2xl font-light leading-relaxed border-l-4 border-brand-green pl-6">
-            Join the premier international school in Cavite. We embrace change and empower minds through a world-class Cambridge curriculum.
+        <!-- Subheadline: Lato (Sans-serif) for high legibility -->
+        <p class="text-lg md:text-2xl text-white/90 mb-10 font-light max-w-4xl mx-auto leading-relaxed">
+            Offering IB Programmes (PYP, MYP, DP) + Senior High Options for Global Success.
+            <span class="block mt-2 text-white/70 text-base">Empowering minds through Unity, Integrity, and Growth.</span>
         </p>
         
-        <div class="flex flex-col sm:flex-row gap-5">
-            <a href="{{ route('apply.form') }}" class="bg-brand-red text-white px-10 py-4 rounded-full shadow-lg hover:bg-red-700 hover:scale-105 transition font-bold tracking-wide text-center border-2 border-brand-red">
-                Start Application
+        <!-- CTA Container -->
+        <div class="flex flex-col items-center gap-4">
+            
+            <!-- Primary CTA: Deep Blue (#00539C) for Trust/Authority -->
+            <!-- Shape: Rounded-Full (Pill) to match screenshot -->
+            <a href="{{ route('apply.form') }}" class="bg-brand-blue text-white px-10 py-4 rounded-full shadow-soft hover:bg-[#003f75] hover:scale-105 transition transform duration-300 font-sub font-bold text-lg tracking-wide border-2 border-brand-blue">
+                Discover PCIS — Unlock Your Child’s Potential
             </a>
-            <!-- FIXED LINK BELOW -->
-            <a href="{{ route('programmes') }}" class="bg-white/5 backdrop-blur-sm border border-white/30 text-white px-10 py-4 rounded-full hover:bg-white hover:text-brand-blue transition font-bold tracking-wide text-center">
-                Explore Programs
-            </a>
+            
+            <!-- Microcopy: Low friction (HIMAY Trigger) -->
+            <p class="text-white/60 text-sm italic font-light">
+                Discover at your own pace, no strings attached.
+            </p>
+        </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7-7-7"></path></svg>
+    </div>
+</div>
+
+
+
+<!-- SECTION 2A: AUTHORITY & ACCREDITATION -->
+<div class="bg-white pt-24 pb-16">
+    <div class="max-w-[1400px] mx-auto px-4 text-center">
+        
+        <p class="text-brand-blue font-sub font-medium text-xl mb-16">
+            Every parent wants their child to thrive in a changing world...
+        </p>
+
+        <!-- LOGOS ROW (Big & Bold) -->
+        <div class="flex flex-wrap md:flex-nowrap justify-center items-center gap-12 grayscale hover:grayscale-0 transition duration-500 w-full">
+            
+            <!-- PYP Logo -->
+            <div class="group shrink-0">
+                <img src="{{ asset('images/candidacy-logo/ib-candidacy-pyp.png') }}" 
+                     alt="IB Primary Years Programme" 
+                     class="h-24 md:h-32 w-auto object-contain transform group-hover:scale-110 transition duration-300">
+            </div>
+
+            <!-- Divider (Taller) -->
+            <div class="hidden md:block w-px h-24 bg-gray-300 shrink-0"></div>
+
+            <!-- MYP Logo -->
+            <div class="group shrink-0">
+                <img src="{{ asset('images/candidacy-logo/ib-candidacy-myp.png') }}" 
+                     alt="IB Middle Years Programme" 
+                     class="h-24 md:h-32 w-auto object-contain transform group-hover:scale-110 transition duration-300">
+            </div>
+
+            <!-- Divider -->
+            <div class="hidden md:block w-px h-24 bg-gray-300 shrink-0"></div>
+
+            <!-- DP Logo -->
+            <div class="group shrink-0">
+                <img src="{{ asset('images/candidacy-logo/ib-candidacy-dp.png') }}" 
+                     alt="IB Diploma Programme" 
+                     class="h-24 md:h-32 w-auto object-contain transform group-hover:scale-110 transition duration-300">
+            </div>
+
         </div>
     </div>
 </div>
 
-<!-- THE 4 PILLARS -->
-<section class="py-24 bg-gray-50 relative">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 -mt-32 relative z-20">
-            
-            <!-- Blue: Academic -->
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-b-4 border-brand-blue hover:-translate-y-2 transition duration-300 group">
-                <div class="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-blue group-hover:text-white transition">
-                    <svg class="w-7 h-7 text-brand-blue group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
-                </div>
-                <h3 class="font-serif font-bold text-xl text-brand-dark mb-3">Academic Excellence</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Rigorous Cambridge curriculum designed to challenge and inspire.</p>
-            </div>
+<!-- SECTION 2B: SOCIAL PROOF & CTA (Distinct Background) -->
+<div class="bg-bg-primary py-20 border-t border-gray-100"> <!-- Subtle Off-White Background -->
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        
+        <!-- THE QUOTE -->
+        <h2 class="font-header font-bold text-3xl md:text-5xl text-brand-blue leading-tight mb-10 drop-shadow-sm">
+            "Trusted by 200 families who want their children future-ready — <br class="hidden md:block">
+            growing towards 300 leaders by 2026."
+        </h2>
 
-            <!-- Red: Leadership -->
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-b-4 border-brand-red hover:-translate-y-2 transition duration-300 group">
-                <div class="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-red group-hover:text-white transition">
-                    <svg class="w-7 h-7 text-brand-red group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path></svg>
-                </div>
-                <h3 class="font-serif font-bold text-xl text-brand-dark mb-3">Leadership</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Molding students of integrity who lead with passion and purpose.</p>
-            </div>
-
-            <!-- Yellow: Community -->
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-b-4 border-brand-yellow hover:-translate-y-2 transition duration-300 group">
-                <div class="w-14 h-14 bg-yellow-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-yellow group-hover:text-white transition">
-                    <svg class="w-7 h-7 text-brand-yellow group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                </div>
-                <h3 class="font-serif font-bold text-xl text-brand-dark mb-3">Community</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">A diverse, inclusive environment fostering unity among cultures.</p>
-            </div>
-
-            <!-- Green: Innovation -->
-            <div class="bg-white p-8 rounded-2xl shadow-xl border-b-4 border-brand-green hover:-translate-y-2 transition duration-300 group">
-                <div class="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-brand-green group-hover:text-white transition">
-                    <svg class="w-7 h-7 text-brand-green group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h3 class="font-serif font-bold text-xl text-brand-dark mb-3">Innovation</h3>
-                <p class="text-sm text-gray-500 leading-relaxed">Forward-thinking education for a rapidly changing global landscape.</p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- ABOUT SECTION -->
-<section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div>
-            <h4 class="text-brand-green font-bold uppercase tracking-widest text-xs mb-3">Why Choose M7 PCIS?</h4>
-            <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-blue mb-8 leading-tight">Global Competence.<br>Ethical Consciousness.</h2>
-            <p class="text-gray-600 mb-8 leading-relaxed text-lg font-light">
-                At PCIS, we're built on <strong class="text-brand-blue font-semibold">Unity, Integrity, and Growth</strong>. We don't just teach subjects; we mold character.
-            </p>
-            <a href="{{ route('programmes') }}" class="inline-flex items-center text-brand-red font-bold hover:text-brand-blue transition group">
-                Read Principal's Message 
-                <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+        <!-- CTA BUTTON -->
+        <div class="flex flex-col items-center gap-3">
+            <a href="{{ route('apply.form') }}" class="bg-brand-red text-white px-12 py-4 rounded-full shadow-soft hover:bg-[#b01b2e] hover:shadow-lg transition transform hover:-translate-y-1 font-sub font-bold text-lg tracking-wide border-2 border-white ring-4 ring-brand-red/20">
+                Book a Campus Tour – Only 12 Slots for 2025
             </a>
+            <p class="text-gray-400 text-sm italic font-light mt-2">
+                Flexible scheduling to match your family's time.
+            </p>
         </div>
-        <div class="relative">
-            <div class="absolute -top-6 -right-6 w-24 h-24 bg-brand-yellow rounded-full opacity-20 blur-xl"></div>
-            <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-brand-blue rounded-full opacity-10 blur-xl"></div>
-            <img src="https://images.unsplash.com/photo-1577896334614-501d0c85f90e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="rounded-2xl shadow-2xl relative z-10 border-4 border-white" alt="Students">
+
+    </div>
+</div>
+
+<!-- SECTION 3: TESTIMONIALS & OUTCOMES (HIMAY: Social Validation) -->
+<div class="py-24 bg-bg-secondary">
+    <div class="max-w-7xl mx-auto px-4">
+        
+        <!-- Header Text -->
+        <div class="text-center max-w-5xl mx-auto mb-16">
+            <p class="text-brand-blue font-sans text-xl md:text-2xl leading-relaxed font-light">
+                Every child deserves to thrive in a world that's constantly changing. At PCIS, we nurture 
+                <strong class="font-bold">confidence, curiosity, and compassion</strong>—equipping your child for 
+                top universities and global opportunities.
+            </p>
+        </div>
+
+        <!-- CARDS GRID -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Card 1: Academic Confidence -->
+            <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col">
+                <!-- Image -->
+                <div class="h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         alt="Classroom Learning" 
+                         class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                </div>
+                <!-- Content -->
+                <div class="p-8 flex-grow flex flex-col justify-between">
+                    <p class="text-brand-blue font-header italic text-lg leading-relaxed mb-8">
+                        "Since joining PCIS, my child's <strong class="not-italic text-brand-teal">confidence</strong> in problem-solving and <strong class="not-italic text-brand-teal">creativity</strong> has soared. The <strong class="not-italic">Cambridge program</strong> truly prepares them for <strong class="not-italic">real-world challenges</strong>."
+                    </p>
+                    <div>
+                        <a href="{{ route('programmes') }}" class="block w-full bg-brand-blue text-white text-center py-3 rounded-full font-bold text-sm shadow-md hover:bg-[#003f75] transition transform hover:-translate-y-0.5">
+                            See How PCIS Can Shape Your Child's Future
+                        </a>
+                        <p class="text-center text-xs text-gray-400 mt-3 italic font-light">Explore freely — we're here to guide, not to pressure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Creativity & Fun (Gold Highlight) -->
+            <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col">
+                <!-- Image -->
+                <div class="h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516062423079-7ca13cdc7f5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         alt="Student Creativity" 
+                         class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                </div>
+                <!-- Content -->
+                <div class="p-8 flex-grow flex flex-col justify-between">
+                    <p class="text-brand-blue font-header italic text-lg leading-relaxed mb-8">
+                        "I love how every single day at PCIS is absolutely full of wonderful <strong class="not-italic text-brand-gold">learning</strong>, endless <strong class="not-italic text-brand-gold">creativity</strong>, and so much <strong class="not-italic text-brand-gold">fun</strong>. I feel completely ready for anything and everything in the future."
+                    </p>
+                    <div>
+                        <a href="{{ route('programmes') }}" class="block w-full bg-brand-gold text-white text-center py-3 rounded-full font-bold text-sm shadow-md hover:bg-[#d99100] transition transform hover:-translate-y-0.5">
+                            Explore What's Possible at PCIS
+                        </a>
+                        <p class="text-center text-xs text-gray-400 mt-3 italic font-light">Explore freely and decide at your own pace.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: International Welcome -->
+            <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden hover:-translate-y-2 transition duration-300 flex flex-col">
+                <!-- Image -->
+                <div class="h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+                         alt="International Students" 
+                         class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                </div>
+                <!-- Content -->
+                <div class="p-8 flex-grow flex flex-col justify-between">
+                    <p class="text-brand-blue font-header italic text-lg leading-relaxed mb-8">
+                        "We were anxious about moving to a new country, but PCIS welcomed us with <strong class="not-italic text-brand-red">warmth</strong> and <strong class="not-italic text-brand-red">understanding</strong>. Our child felt at home from day one — and so did we."
+                    </p>
+                    <div>
+                        <a href="{{ route('families') }}" class="block w-full bg-brand-blue text-white text-center py-3 rounded-full font-bold text-sm shadow-md hover:bg-[#003f75] transition transform hover:-translate-y-0.5">
+                            Speak With Our International Advisor
+                        </a>
+                        <p class="text-center text-xs text-gray-400 mt-3 italic font-light">Get clear answers about global pathways for your child.</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-</section>
+</div>
 
 @endsection
