@@ -9,14 +9,26 @@ class Enrollment extends Model
 {
     use HasFactory;
 
-     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'grade_level',
-        'previous_school',
-        'status'
-    ];
+    protected $fillable = [
+    'applicant_type', 'lrn', 'first_name', 'middle_name', 'last_name', 'nickname', 
+    'gender', 'birth_date', 'birth_country', 'city_of_birth', 'religion', 'citizenship',
+    'primary_language', 'secondary_language', 'height', 'weight',
+    'house_no', 'village', 'barangay', 'city', 'province', 'zip_code', 'country',
+    'telephone', 'phone', 'email',
+    'birth_order', 'parents_marital_status', 'authorized_pickup',
+    'father_data', 'mother_data', 'guardian_data',
+    'siblings_data', 'academic_history',
+    'health_conditions', 'has_allergies',
+    'disciplinary_history', 'special_needs', 'referral_source',
+    'grade_level', 'status'
+];
+
+protected $casts = [
+    'father_data' => 'array',
+    'mother_data' => 'array',
+    'guardian_data' => 'array',
+    'siblings_data' => 'array',
+    'academic_history' => 'array',
+];
     
 }

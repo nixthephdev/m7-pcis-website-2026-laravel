@@ -53,16 +53,18 @@
     </div>
 
     <!-- Top Bar -->
-    <div class="hidden md:block bg-brand-blue text-white text-xs py-2">
+    <div class="hidden md:block bg-brand-blue text-white/90 text-xs py-2 border-b border-white/5">
         <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
             <div class="flex space-x-6 font-medium tracking-wide">
                 <span class="flex items-center gap-2">📞 +63 917 7217 800</span>
                 <span class="flex items-center gap-2">☎️ +6346 458 6588</span>
             </div>
             <div class="flex space-x-4 font-medium">
-                <a href="#" class="hover:text-brand-gold transition">Parent Portal</a>
-                <span class="text-white/30">|</span>
-                <a href="#" class="hover:text-brand-gold transition">Staff Login</a>
+                <a href="#" class="hover:text-brand-yellow transition">Parent Portal</a>
+                <span class="text-white/20">|</span>
+                
+                <!-- LINKED TO ADMIN LOGIN -->
+                <a href="{{ route('admin.login') }}" class="hover:text-brand-yellow transition">Staff Login</a>
             </div>
         </div>
     </div>

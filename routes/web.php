@@ -10,52 +10,36 @@ use App\Http\Controllers\AdminController;
 |--------------------------------------------------------------------------
 */
 
-// 1. Home Page
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// --- PUBLIC PAGES ---
+Route::get('/', function () { return view('welcome'); })->name('home');
+Route::get('/about', function () { return view('about'); })->name('about');
+Route::get('/team', function () { return view('team'); })->name('team');
+Route::get('/academics', function () { return view('academics'); })->name('programmes');
+Route::get('/admissions', function () { return view('admissions'); })->name('admissions');
+Route::get('/life-at-pcis', function () { return view('life'); })->name('life');
+Route::get('/international-families', function () { return view('families'); })->name('families');
+Route::get('/contact', function () { return view('contact'); })->name('contact');
 
-// 2. Academics Page (I CHANGED THIS NAME TO MATCH YOUR ERROR)
-Route::get('/academics', function () {
-    return view('academics');
-})->name('programmes'); 
-
-// 3. Admissions Page
-Route::get('/admissions', function () {
-    return view('admissions');
-})->name('admissions');
-
-// 4. About Us Page
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
-// 5. Academic Team Page
-Route::get('/team', function () {
-    return view('team');
-})->name('team');
-
-// 6. Life at PCIS Page
-Route::get('/life-at-pcis', function () {
-    return view('life');
-})->name('life');
-
-// 7. International Families Page
-Route::get('/international-families', function () {
-    return view('families');
-})->name('families');
-
-// 8. Contact Page
-Route::get('/contact', function () {
-    return view('contact'); 
-})->name('contact');
-
-// 9. Enrollment Form
+// --- ENROLLMENT FORM ---
 Route::get('/apply', [EnrollmentController::class, 'index'])->name('apply.form');
 Route::post('/apply', [EnrollmentController::class, 'store'])->name('apply.submit');
 
-// Admin Dashboard Route
-Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+// --- ADMIN AUTHENTICATION ---
+Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
 
-// Delete Route (for cleaning up test data)
-Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
+// *** THIS WAS MISSING ***
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout'); 
+
+// --- PROTECTED ADMIN DASHBOARD ---
+Route::middleware(['auth'])->group(function () {
+    
+    // Dashboard
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
+    // Delete Student
+    Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
+    
+    // Update Status (Approve/Reject)
+    Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
+});
