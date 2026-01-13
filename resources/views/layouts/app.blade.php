@@ -78,8 +78,16 @@
                 <a href="{{ url('/') }}" class="flex items-center gap-3 group shrink-0">
                     <img src="{{ asset('images/logo.png') }}" class="h-12 md:h-16 w-auto transition transform group-hover:scale-105" alt="PCIS Logo"> 
                     <div class="flex flex-col justify-center">
-                        <h1 class="font-header font-bold text-brand-blue text-sm md:text-lg leading-none uppercase tracking-wide">
-                            M7 Philippine Cambridge<br>
+                        <!-- Added 'lining-nums' to force number alignment -->
+                        <!-- Logo Text -->
+                        <h1 class="font-header font-bold text-brand-blue text-sm md:text-lg leading-none uppercase tracking-wide lining-nums">
+                            
+                            <!-- M7 Unit (Tightened) -->
+                            <span class="tracking-tighter mr-2">
+                                <span class="text-brand-blue">M</span><span class="text-brand-red inline-block relative bottom-[1px] -ml-[-1px]">7</span>
+                            </span>
+
+                            Philippine Cambridge<br>
                             <span class="hidden md:inline">International School</span>
                         </h1>
                     </div>
