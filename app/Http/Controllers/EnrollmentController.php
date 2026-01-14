@@ -17,9 +17,8 @@ class EnrollmentController extends Controller
 
     // Store the data
     public function store(Request $request) {
-        // 1. Validate
+        // 1. Validate (Keep your existing validation)
         $validated = $request->validate([
-            // ... (keep your existing validation rules)
             'applicant_type' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
@@ -31,21 +30,39 @@ class EnrollmentController extends Controller
             'father_details' => 'nullable|array',
             'mother_details' => 'nullable|array',
             'health_conditions' => 'nullable',
+            'siblings_data' => 'nullable|json',
+            'academic_history' => 'nullable|json',
+            // Add other fields as needed based on your form
         ]);
 
-        // 2. Save to Database
-        $enrollment = Enrollment::create($request->all());
+        // 2. GENERATE REFERENCE NUMBER
+        // Format: PCIS-YEAR-RANDOM (e.g., PCIS-2026-8492)
+        $refNo = 'PCIS-' . date('Y') . '-' . rand(1000, 9999);
 
-        // 3. SEND EMAIL (The New Part)
-        // We wrap this in a try-catch block so if email fails (no internet), the app doesn't crash
+        // Ensure uniqueness (simple check)
+        while(Enrollment::where('reference_no', $refNo)->exists()){
+            $refNo = 'PCIS-' . date('Y') . '-' . rand(1000, 9999);
+        }
+
+        // 3. Merge Ref No into Request Data
+        $data = $request->all();
+        $data['reference_no'] = $refNo;
+
+        // 4. Save to Database
+        $enrollment = Enrollment::create($data);
+
+        // 5. Send Email (Pass the enrollment object which now has the Ref No)
         try {
             Mail::to($request->email)->send(new ApplicationReceived($enrollment));
         } catch (\Exception $e) {
-            // Log error if needed, but don't stop the process
+            // Log error
         }
 
-        // 4. Redirect
-        return redirect()->back()->with('success', 'Application submitted successfully! Please check your email for confirmation.');
+        // 6. Redirect with Success AND the Reference Number
+        return redirect()->back()->with([
+            'success' => 'Application submitted successfully!',
+            'reference_no' => $refNo // Pass this to the view
+        ]);
     }
 
     // Handle Fee Download from Global Header

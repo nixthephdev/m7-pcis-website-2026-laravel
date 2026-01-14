@@ -26,7 +26,8 @@
             <p>Thank you for choosing M7 Philippine Cambridge International School. We have successfully received your application for the upcoming School Year.</p>
             
             <div class="details">
-                <p><strong>Reference No:</strong> #{{ $enrollment->id }}</p>
+                <!-- Add this line at the top of the details box -->
+                <p><strong>Reference No:</strong> <span style="color: #D72638; font-size: 16px;">{{ $enrollment->reference_no }}</span></p>
                 <p><strong>Student Name:</strong> {{ $enrollment->first_name }} {{ $enrollment->last_name }}</p>
                 <p><strong>Grade Level:</strong> {{ $enrollment->grade_level }}</p>
                 <p><strong>Date Applied:</strong> {{ $enrollment->created_at->format('F d, Y') }}</p>

@@ -36,15 +36,32 @@
         <div class="lg:w-4/5">
             
             <!-- SUCCESS MESSAGE (Shows only after submission) -->
+           <!-- SUCCESS MESSAGE -->
             @if(session('success'))
                 <div class="bg-white rounded-xl shadow-soft p-12 text-center h-full flex flex-col items-center justify-center min-h-[500px]">
-                    <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-sm">
+                    
+                    <!-- Animated Check -->
+                    <div class="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mb-6 shadow-sm animate-bounce">
                         <svg class="w-12 h-12 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                     </div>
-                    <h2 class="text-4xl font-header font-bold text-brand-blue mb-4">Application Received!</h2>
-                    <p class="text-gray-600 text-lg max-w-xl mx-auto mb-8">
-                        {{ session('success') }}
+                    
+                    <h2 class="text-4xl font-header font-bold text-brand-blue mb-2">Application Received!</h2>
+                    <p class="text-gray-500 mb-8">Your application has been securely transmitted to the Registrar.</p>
+
+                    <!-- REFERENCE NUMBER CARD -->
+                    <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-6 mb-8 w-full max-w-md mx-auto">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Your Reference Number</p>
+                        <p class="text-3xl font-mono font-bold text-brand-red tracking-wider select-all">
+                            {{ session('reference_no') }}
+                        </p>
+                        <p class="text-[10px] text-gray-400 mt-2">Please save this number for tracking purposes.</p>
+                    </div>
+
+                    <p class="text-gray-600 text-sm max-w-xl mx-auto mb-8">
+                        We have sent a confirmation email to <strong>{{ old('email') }}</strong>. <br>
+                        Our team will contact you within 3 working days regarding the assessment schedule.
                     </p>
+
                     <div class="flex gap-4">
                         <a href="{{ route('home') }}" class="px-8 py-3 bg-gray-100 text-gray-700 font-bold rounded-lg hover:bg-gray-200 transition">
                             Back to Home
