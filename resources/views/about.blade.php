@@ -63,7 +63,7 @@
                         <div class="md:hidden w-full h-1 bg-gray-200 ml-4"></div>
                     </div>
                     <div class="bg-gradient-to-b from-green-50 to-white p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition duration-300 h-full border border-green-100">
-                        <span class="text-[#009245] font-bold tracking-widest uppercase text-xs mb-3 block font-sub">July 2024</span>
+                        <span class="text-[#009245] font-bold tracking-widest uppercase text-xs mb-3 block font-sub">July 2025</span>
                         <h3 class="font-header font-bold text-xl text-[#009245] mb-3">IB Candidacy (DP)</h3>
                         <p class="text-sm text-gray-600 leading-relaxed mb-5 font-light">Official application for the Diploma Programme to ensure college readiness.</p>
                         <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-[#009245] text-white shadow-sm">✓ Approved</span>
@@ -78,7 +78,7 @@
                         <div class="md:hidden w-full h-1 bg-gray-200 ml-4"></div>
                     </div>
                     <div class="bg-gradient-to-b from-yellow-50 to-white p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition duration-300 h-full border border-yellow-100">
-                        <span class="text-brand-gold font-bold tracking-widest uppercase text-xs mb-3 block font-sub">October 2024</span>
+                        <span class="text-brand-gold font-bold tracking-widest uppercase text-xs mb-3 block font-sub">October 2025</span>
                         <h3 class="font-header font-bold text-xl text-[#b47800] mb-3">Expansion</h3>
                         <p class="text-sm text-gray-600 leading-relaxed mb-5 font-light">Expanding candidacy to include Primary Years (PYP) and Middle Years (MYP).</p>
                         <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-brand-gold text-white shadow-sm">⏳ In Progress</span>
@@ -93,7 +93,7 @@
                         <div class="md:hidden w-full h-1 bg-gray-200 ml-4"></div>
                     </div>
                     <div class="bg-gradient-to-b from-red-50 to-white p-8 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition duration-300 h-full border border-red-100">
-                        <span class="text-brand-red font-bold tracking-widest uppercase text-xs mb-3 block font-sub">August 2025</span>
+                        <span class="text-brand-red font-bold tracking-widest uppercase text-xs mb-3 block font-sub">August 2026</span>
                         <h3 class="font-header font-bold text-xl text-brand-red mb-3">Authorization</h3>
                         <p class="text-sm text-gray-600 leading-relaxed mb-5 font-light">Target date for full International Baccalaureate World School status.</p>
                         <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-brand-red text-white shadow-sm">🎯 Goal</span>

@@ -19,6 +19,8 @@ Route::get('/admissions', function () { return view('admissions'); })->name('adm
 Route::get('/life-at-pcis', function () { return view('life'); })->name('life');
 Route::get('/international-families', function () { return view('families'); })->name('families');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
+// Download Fees Route (Global Header)
+Route::post('/download-fees', [EnrollmentController::class, 'downloadFees'])->name('download.fees');
 
 // --- ENROLLMENT FORM ---
 Route::get('/apply', [EnrollmentController::class, 'index'])->name('apply.form');
@@ -42,4 +44,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Update Status (Approve/Reject)
     Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
+
+    // Add this inside the admin middleware group
+    Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
 });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ApplicationReceived;
+use App\Models\Lead;
 
 class EnrollmentController extends Controller
 {
@@ -46,4 +47,45 @@ class EnrollmentController extends Controller
         // 4. Redirect
         return redirect()->back()->with('success', 'Application submitted successfully! Please check your email for confirmation.');
     }
+
+    // Handle Fee Download from Global Header
+    public function downloadFees(Request $request)
+    {
+        // 1. Validate
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'level' => 'required',
+        ]);
+
+        // 2. SAVE THE LEAD (New Step)
+        \App\Models\Lead::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'level' => $request->level,
+        ]);
+
+        
+        // 3. SMART DOWNLOAD (Checks for PDF, PNG, or JPG)
+        $extensions = ['pdf', 'png', 'jpg', 'jpeg'];
+        $filePath = null;
+
+        // Loop through extensions to find the matching file
+        foreach ($extensions as $ext) {
+            $testPath = public_path('downloads/' . $request->level . '.' . $ext);
+            if (file_exists($testPath)) {
+                $filePath = $testPath;
+                break; // Stop looking once found
+            }
+        }
+
+        // 4. Download or Error
+        if ($filePath) {
+            return response()->download($filePath);
+        } else {
+            return back()->with('error', 'Sorry, the fee schedule for ' . $request->level . ' is currently unavailable.');
+        }
+}
 }

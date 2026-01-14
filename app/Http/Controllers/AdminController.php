@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Lead;
 
 class AdminController extends Controller
 {
@@ -42,10 +43,14 @@ class AdminController extends Controller
     }
 
     // 4. Dashboard
-    public function dashboard()
+     public function dashboard()
     {
         $students = Enrollment::orderBy('created_at', 'desc')->get();
-        return view('admin.dashboard', compact('students'));
+        
+        // Fetch Leads
+        $leads = Lead::orderBy('created_at', 'desc')->get();
+
+        return view('admin.dashboard', compact('students', 'leads'));
     }
 
     // 5. Delete Student
@@ -63,5 +68,31 @@ class AdminController extends Controller
         $student->save();
 
         return back()->with('success', 'Application status updated to ' . ucfirst($request->status));
+    }
+
+    // Show Applications List (With Search & Filter)
+    public function applications(Request $request)
+    {
+        $query = Enrollment::query();
+
+        // Search Logic
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%$search%")
+                  ->orWhere('last_name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%")
+                  ->orWhere('lrn', 'like', "%$search%");
+            });
+        }
+
+        // Filter by Status
+        if ($request->has('status') && $request->status != 'all') {
+            $query->where('status', $request->status);
+        }
+
+        $students = $query->orderBy('created_at', 'desc')->paginate(10); // 10 per page
+
+        return view('admin.applications', compact('students'));
     }
 }
