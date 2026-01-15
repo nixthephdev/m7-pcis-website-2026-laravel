@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AdminController;
+use App\Livewire\EnrollmentWizard; // <--- This is the correct one
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +53,10 @@ Route::middleware(['auth'])->group(function () {
     // Profile Routes
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+
+    Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
+
+    Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
+
+    Route::get('/apply', EnrollmentWizard::class)->name('apply.form');
 });

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'M7 Philippine Cambridge School')</title>
     
+    <!-- LIVEWIRE STYLES -->
+    @livewireStyles
+
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +15,7 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
     
     <script>
         tailwind.config = {
@@ -20,7 +24,7 @@
                     fontFamily: {
                         sans: ['"Lato"', 'sans-serif'],
                         header: ['"Playfair Display"', 'serif'],
-                        royal: ['"Cinzel"', 'serif'], // Added Cinzel for Logo
+                        royal: ['"Cinzel"', 'serif'], 
                         sub: ['"Montserrat"', 'sans-serif'],
                     },
                     colors: {
@@ -29,7 +33,7 @@
                             gold: '#F4A300',   
                             red: '#D72638',    
                             teal: '#009688',   
-                            dark: '#0a1a4a', // Deep Navy for Footer
+                            dark: '#0a1a4a', 
                         },
                         bg: {
                             primary: '#F9F9F9',
@@ -44,8 +48,35 @@
             }
         }
     </script>
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
 <body class="bg-gray-50 flex flex-col min-h-screen font-sans antialiased selection:bg-brand-yellow selection:text-brand-blue pt-[180px] xl:pt-[150px]">
+
+    <!-- SUCCESS NOTIFICATION (FLOATING TOAST) -->
+    @if(session('success'))
+        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 6000)" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform translate-x-8"
+             x-transition:enter-end="opacity-100 transform translate-x-0"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="opacity-100 transform translate-x-0"
+             x-transition:leave-end="opacity-0 transform translate-x-8"
+             class="fixed top-32 right-6 z-[200] bg-white border-l-4 border-emerald-500 shadow-2xl rounded-lg p-4 max-w-md flex items-start gap-4">
+            
+            <div class="text-emerald-500 bg-emerald-50 p-2 rounded-full">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <div>
+                <h4 class="font-bold text-gray-800 text-sm">Success!</h4>
+                <p class="text-sm text-gray-600 mt-1">{{ session('success') }}</p>
+            </div>
+            <button @click="show = false" class="text-gray-400 hover:text-gray-600 ml-auto">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+    @endif
 
     <!-- STICKY HEADER -->
     <header class="fixed top-0 left-0 w-full z-[100] shadow-2xl transition-all duration-300">
@@ -92,18 +123,17 @@
             <div class="max-w-[1400px] mx-auto px-4 py-3">
                 <div class="flex justify-between items-center">
                     
-                    <!-- LOGO (Compact & Clean) -->
+                    <!-- LOGO -->
                     <a href="{{ url('/') }}" class="flex items-center gap-3 group shrink-0">
                         <img src="{{ asset('images/logo.png') }}" class="h-12 md:h-14 w-auto transition transform group-hover:scale-105 drop-shadow-sm" alt="PCIS Logo"> 
                         <div class="flex flex-col justify-center">
                             <h1 class="font-royal font-bold text-brand-blue text-sm md:text-base leading-none tracking-wide lining-nums">
                                 <span class="mr-1"><span class="text-brand-blue">M</span><span class="text-brand-red inline-block relative bottom-[0.5px]">7</span></span>
                                 PHILIPPINE CAMBRIDGE<br>INTERNATIONAL SCHOOL</h1>
-                                
                         </div>
                     </a>
 
-                    <!-- DESKTOP MENU (Optimized Spacing) -->
+                    <!-- DESKTOP MENU -->
                     <div class="hidden xl:flex items-center gap-5 font-sub font-bold text-[13px] text-gray-700 uppercase tracking-widest">
                         <a href="{{ route('home') }}" class="hover:text-brand-blue hover:underline decoration-2 underline-offset-8 decoration-brand-gold transition py-2">Home</a>
                         <a href="{{ route('about') }}" class="hover:text-brand-blue hover:underline decoration-2 underline-offset-8 decoration-brand-gold transition py-2">About</a>
@@ -147,11 +177,11 @@
     <!-- CONTENT -->
     <main class="flex-grow relative z-0">
         @yield('content')
+        {{ $slot ?? '' }}
     </main>
 
-    <!-- PREMIUM FOOTER (Dark Navy) -->
+    <!-- PREMIUM FOOTER -->
     <footer class="bg-brand-dark text-white pt-20 pb-10 border-t-[8px] border-brand-gold relative overflow-hidden">
-        <!-- Background Pattern -->
         <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         
         <div class="max-w-[1400px] mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 mb-16 relative z-10">
@@ -191,30 +221,20 @@
             </div>
         </div>
 
-        <!-- Social Media (Centered) -->
-        <!-- Social Media (Centered) -->
+        <!-- Social Media -->
         <div class="flex justify-center gap-6 mb-10 relative z-10">
-            
-            <!-- Facebook -->
             <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white hover:text-[#1877F2] transition duration-300 group backdrop-blur-sm border border-white/10">
                 <svg class="w-5 h-5 text-white group-hover:text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.791-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             </a>
-
-            <!-- Instagram -->
             <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white hover:text-[#E4405F] transition duration-300 group backdrop-blur-sm border border-white/10">
                 <svg class="w-5 h-5 text-white group-hover:text-[#E4405F]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             </a>
-
-            <!-- YouTube (New) -->
             <a href="#" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition duration-300 group backdrop-blur-sm border border-white/10">
                 <svg class="w-5 h-5 text-white group-hover:text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
             </a>
-
-            <!-- Email (New) -->
             <a href="mailto:admissions@pcis.edu.ph" class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center hover:bg-white hover:text-brand-gold transition duration-300 group backdrop-blur-sm border border-white/10">
                 <svg class="w-5 h-5 text-white group-hover:text-brand-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </a>
-
         </div>
 
         <div class="border-t border-white/10 pt-8 text-center text-xs text-white/30 font-light relative z-10">
@@ -227,5 +247,8 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
     </script>
+
+    <!-- LIVEWIRE SCRIPTS -->
+    @livewireScripts
 </body>
 </html>

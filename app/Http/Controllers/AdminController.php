@@ -145,4 +145,61 @@ class AdminController extends Controller
         return back()->with('success', 'Profile updated successfully!');
     }
 
+    public function payments(Request $request)
+    {
+        // Start Query
+        $query = \Illuminate\Support\Facades\DB::table('payments')
+            ->join('enrollments', 'payments.enrollment_id', '=', 'enrollments.id')
+            ->select('payments.*', 'enrollments.first_name', 'enrollments.last_name', 'enrollments.grade_level');
+
+        // Search Logic
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('enrollments.last_name', 'like', "%$search%")
+                  ->orWhere('payments.transaction_id', 'like', "%$search%");
+            });
+        }
+
+        // Filter by Status
+        if ($request->has('status') && $request->status != 'all') {
+            $query->where('payments.status', $request->status);
+        }
+
+        $payments = $query->orderBy('payments.created_at', 'desc')->paginate(10);
+
+        // Calculate Stats
+        $totalCollected = \Illuminate\Support\Facades\DB::table('payments')->where('status', 'paid')->sum('amount');
+        $pendingAmount = \Illuminate\Support\Facades\DB::table('payments')->where('status', 'pending')->sum('amount');
+
+        return view('admin.payments', compact('payments', 'totalCollected', 'pendingAmount'));
+    }
+
+   public function leads(Request $request)
+    {
+        // 1. Update the "Last Viewed" timestamp for the current user
+        // This resets the notification counter because we are viewing the page now.
+        $user = auth()->user();
+        $user->last_leads_viewed_at = now();
+        $user->save(); // Explicitly save
+
+        // 2. Fetch Data (Existing Logic)
+        $query = \App\Models\Lead::orderBy('created_at', 'desc');
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%")
+                  ->orWhere('phone', 'like', "%$search%");
+            });
+        }
+
+        $leads = $query->paginate(10);
+        $totalLeads = \App\Models\Lead::count();
+        $todayLeads = \App\Models\Lead::whereDate('created_at', today())->count();
+
+        return view('admin.leads', compact('leads', 'totalLeads', 'todayLeads'));
+    }
+
 }
