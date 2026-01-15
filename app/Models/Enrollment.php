@@ -20,7 +20,7 @@ class Enrollment extends Model
     'siblings_data', 'academic_history',
     'health_conditions', 'has_allergies',
     'disciplinary_history', 'special_needs', 'referral_source',
-    'grade_level', 'status'
+    'grade_level', 'status','reference_no', // <--- ADD THIS LINE
 ];
 
 protected $casts = [

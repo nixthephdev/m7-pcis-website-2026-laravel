@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Enrollment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Lead;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdminController extends Controller
 {
@@ -45,10 +48,11 @@ class AdminController extends Controller
     // 4. Dashboard
      public function dashboard()
     {
-        $students = Enrollment::orderBy('created_at', 'desc')->get();
+        // Keep students as is (fetching all for the counters/stats)
+        $students = \App\Models\Enrollment::orderBy('created_at', 'desc')->get();
         
-        // Fetch Leads
-        $leads = Lead::orderBy('created_at', 'desc')->get();
+        // CHANGE THIS: Use paginate(5) instead of get()
+        $leads = \App\Models\Lead::orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.dashboard', compact('students', 'leads'));
     }
@@ -95,4 +99,50 @@ class AdminController extends Controller
 
         return view('admin.applications', compact('students'));
     }
+
+    // Show Profile Page
+    public function profile()
+    {
+        return view('admin.profile');
+    }
+
+    // Update Profile Logic
+    public function updateProfile(Request $request)
+    {
+        $user = auth()->user();
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            // CHANGED: max:3072 (3MB)
+            'avatar' => 'nullable|image|max:3072', 
+            'password' => 'nullable|min:8|confirmed',
+        ]);
+
+        // Update Basic Info
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // Update Password
+        if ($request->filled('password')) {
+            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        }
+
+        // Update Avatar
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar
+            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            }
+            
+            // Store new avatar (High Quality)
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $path;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profile updated successfully!');
+    }
+
 }

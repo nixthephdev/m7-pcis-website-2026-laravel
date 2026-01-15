@@ -47,4 +47,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Add this inside the admin middleware group
     Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
+
+    // Profile Routes
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 });
