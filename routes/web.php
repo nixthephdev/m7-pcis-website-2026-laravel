@@ -5,6 +5,8 @@ use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicantAuthController;
 use App\Livewire\EnrollmentWizard; 
+use App\Http\Controllers\ApplicantPasswordResetController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +54,12 @@ Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.logi
 // Shared Logout
 Route::post('/logout', [ApplicantAuthController::class, 'logout'])->name('logout');
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+  // Forgot Password
+    Route::get('forgot-password', [ApplicantPasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+    Route::post('forgot-password', [ApplicantPasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::get('reset-password/{token}', [ApplicantPasswordResetController::class, 'showResetForm'])->name('password.reset');
+    Route::post('reset-password', [ApplicantPasswordResetController::class, 'reset'])->name('password.update');
 
 
 // ====================================================

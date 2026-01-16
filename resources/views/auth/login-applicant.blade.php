@@ -3,102 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - M7 PCIS</title>
+    <title>Applicant Login - M7 PCIS</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
 </head>
-<body class="bg-[#00539C] min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+<body class="bg-[#101426] min-h-screen flex flex-col items-center justify-center p-4 text-white relative overflow-hidden">
 
-    <!-- Background Effects -->
-    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00539C] to-[#020617] opacity-90"></div>
-    <div class="absolute top-24 right-24 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+    <!-- Background Glow -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-indigo-900/20 rounded-full blur-[120px]"></div>
+    </div>
 
-    <!-- Main Card -->
-    <div class="relative z-10 w-full max-w-4xl bg-white rounded-3xl shadow-2xl flex overflow-hidden min-h-[500px]">
+    <!-- MAIN CONTENT -->
+    <div class="relative z-10 w-full max-w-[420px] flex flex-col items-center">
         
-        <!-- Left: Form -->
-        <div class="w-full md:w-1/2 p-10 md:p-12 flex flex-col justify-center">
-            <div class="mb-8">
-                <img src="{{ asset('images/logo.png') }}" class="h-12 w-auto mb-6 md:hidden">
-                <h3 class="text-3xl font-bold text-slate-800">Welcome Back</h3>
-                <p class="text-slate-500 text-sm mt-1">Enter your credentials to access your portal.</p>
-            </div>
+        <!-- LOGO -->
+        <div class="text-center mb-8">
+            <img src="{{ asset('images/logo.png') }}" class="h-20 w-auto mx-auto mb-4 drop-shadow-xl">
+            <h1 class="text-2xl font-bold tracking-wide text-white">Welcome Back</h1>
+            <p class="text-sm text-blue-200/70 mt-1 font-light">Sign in to access your applicant portal</p>
+        </div>
 
-             <!-- SUCCESS MESSAGE -->
+        <!-- LOGIN CARD -->
+        <div class="w-full bg-[#1E253E] border border-white/5 rounded-2xl shadow-2xl p-8 backdrop-blur-sm">
+            
+            <!-- Success Message -->
             @if(session('success'))
-                <div class="bg-emerald-50 text-emerald-700 px-4 py-3 rounded-xl mb-6 text-sm border border-emerald-100 flex items-center gap-2 animate-fade-in-down">
-                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span class="font-bold">{{ session('success') }}</span>
+                <div class="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-3 rounded-lg mb-6 text-xs flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    {{ session('success') }}
                 </div>
             @endif
 
-            <!-- Error -->
+            <!-- Error Alert -->
             @if($errors->any())
-                <div class="bg-red-50 text-red-600 px-4 py-3 rounded-xl mb-6 text-sm border border-red-100 flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-lg mb-6 text-xs flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     {{ $errors->first() }}
                 </div>
             @endif
 
-
             <form action="{{ route('login') }}" method="POST" class="space-y-5">
                 @csrf
-                
+
+                <!-- Email Field -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 ml-1">Email Address</label>
-                    <input type="email" name="email" required 
-                           class="w-full px-5 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-[#00539C] focus:border-[#00539C] outline-none transition text-sm font-medium">
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Email Address</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-500 group-focus-within:text-blue-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" /></svg>
+                        </div>
+                        <input type="email" name="email" required 
+                               class="w-full pl-11 pr-4 py-3 rounded-lg bg-[#15192B] border border-gray-700 text-white placeholder-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm"
+                               placeholder="name@example.com">
+                    </div>
                 </div>
 
+                <!-- Password Field -->
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1.5 ml-1">Password</label>
-                    <input type="password" name="password" required 
-                           class="w-full px-5 py-3 rounded-xl bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-[#00539C] focus:border-[#00539C] outline-none transition text-sm font-medium">
+                    <label class="block text-xs font-medium text-gray-300 mb-1.5">Password</label>
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                            <svg class="h-5 w-5 text-gray-500 group-focus-within:text-blue-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                        </div>
+                        <input type="password" name="password" required 
+                               class="w-full pl-11 pr-4 py-3 rounded-lg bg-[#15192B] border border-gray-700 text-white placeholder-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-sm"
+                               placeholder="••••••••">
+                    </div>
                 </div>
 
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" class="rounded border-gray-300 text-[#00539C] focus:ring-[#00539C]">
-                        <span class="text-xs font-bold text-slate-500">Remember me</span>
+                <!-- Options -->
+                <div class="flex items-center justify-between text-xs">
+                    <label class="flex items-center gap-2 cursor-pointer text-gray-400 hover:text-gray-300">
+                        <input type="checkbox" class="rounded border-gray-600 bg-[#15192B] text-blue-500 focus:ring-offset-[#1E253E] focus:ring-blue-500">
+                        <span>Remember me</span>
                     </label>
-                    <a href="#" class="text-xs font-bold text-[#00539C] hover:underline">Forgot Password?</a>
+                    <a href="{{ route('password.request') }}" class="text-blue-400 hover:text-blue-300 transition">Forgot password?</a>
                 </div>
 
-                <button type="submit" class="w-full bg-[#00539C] text-white font-bold py-3.5 rounded-xl hover:bg-blue-800 transition shadow-lg shadow-blue-500/30 transform hover:-translate-y-0.5">
+                <!-- Button -->
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 rounded-lg shadow-lg shadow-blue-900/30 transition transform hover:-translate-y-0.5">
                     Sign In
                 </button>
             </form>
-
-            <div class="mt-8 text-center">
-                <p class="text-sm text-slate-500">
-                    New here? <a href="{{ route('register') }}" class="text-[#00539C] font-bold hover:underline">Create Account</a>
-                </p>
-            </div>
         </div>
 
-        <!-- Right: Image (Hidden on Mobile) -->
-        <div class="hidden md:flex w-1/2 bg-[#00539C] relative items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-            <!-- Glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-white/20 rounded-full blur-3xl"></div>
-            
-            <div class="relative z-10 text-center text-white p-8">
-                <img src="{{ asset('images/logo.png') }}" class="h-24 w-auto mx-auto mb-6 drop-shadow-xl animate-float">
-                <h2 class="font-royal font-bold text-2xl">M7 PCIS</h2>
-                <p class="text-blue-200 text-xs uppercase tracking-widest mt-1">Applicant Portal</p>
-            </div>
+        <!-- FOOTER -->
+        <div class="mt-8 text-center">
+            <p class="text-sm text-gray-400">
+                Don't have an account? <a href="{{ route('register') }}" class="text-blue-400 font-bold hover:text-white transition">Create Account</a>
+            </p>
         </div>
 
     </div>
-
-    <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-    </style>
 
 </body>
 </html>

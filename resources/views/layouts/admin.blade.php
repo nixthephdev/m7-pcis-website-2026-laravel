@@ -29,8 +29,7 @@
                             card: '#151e32', // Card Dark
                             gold: '#F4A300',
                             red: '#D72638',
-                            green: '#009245',
-                            navy: '#101426' // The new Navy Color
+                            green: '#009245'
                         }
                     },
                     boxShadow: {
@@ -57,12 +56,12 @@
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-[0.05]"></div>
     </div>
 
-    <!-- 1. TOP NAVIGATION (MATCHING NAVY BLUE) -->
+    <!-- 1. TOP NAVIGATION (PREMIUM ROYAL BLUE GRADIENT) -->
     <nav x-data="{ open: false }" 
-         class="bg-[#101426] text-white shadow-lg sticky top-0 z-50 border-b border-white/5 relative">
+         class="bg-gradient-to-r from-[#002855] to-[#00539C] text-white shadow-lg sticky top-0 z-50 border-b border-white/10 relative">
         
         <!-- Texture Overlay -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
 
         <!-- CENTERED CONTAINER -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,14 +72,14 @@
                     <!-- Logo -->
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
                         <div class="relative">
-                            <div class="absolute inset-0 bg-white/10 rounded-full blur-md group-hover:blur-lg transition duration-500"></div>
+                            <div class="absolute inset-0 bg-white/20 rounded-full blur-md group-hover:blur-lg transition duration-500"></div>
                             <img src="{{ asset('images/logo.png') }}" class="relative h-9 w-auto drop-shadow-md transform group-hover:scale-105 transition" alt="Logo">
                         </div>
                         <div class="leading-tight">
                             <h1 class="font-royal font-bold text-lg text-white tracking-wide drop-shadow-md">
                                 M<span class="text-[#D72638]">7</span> PCIS
                             </h1>
-                            <p class="text-[9px] text-blue-200 uppercase tracking-[0.2em] font-semibold opacity-80">Registrar</p>
+                            <p class="text-[9px] text-blue-100 uppercase tracking-[0.2em] font-semibold opacity-80">Registrar</p>
                         </div>
                     </a>
 
@@ -89,14 +88,14 @@
                         
                         <!-- Dashboard -->
                         <a href="{{ route('admin.dashboard') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
                            Dashboard
                         </a>
 
                         <!-- Applicants (Registrar & Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar']))
                         <a href="{{ route('admin.applications') }}" 
-                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.applications') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.applications') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
                            Applicants
                            @php
                                $pendingCount = \App\Models\Enrollment::where('status', 'pending')->count();
@@ -115,7 +114,7 @@
                         <!-- Payments (Cashier, Registrar, Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar', 'cashier']))
                         <a href="{{ route('admin.payments') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
                            Payments
                         </a>
                         @endif
@@ -123,7 +122,7 @@
                         <!-- Leads (Marketing, Registrar, Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar', 'marketing']))
                         <a href="{{ route('admin.leads') }}" 
-                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.leads') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.leads') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
                            Leads
                            @php
                                $user = auth()->user();
@@ -142,14 +141,14 @@
                         @endif
 
                         <!-- Reports -->
-                        <a href="#" class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5">
+                        <a href="#" class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 text-blue-100 hover:text-white hover:bg-white/10">
                            Reports
                         </a>
 
                         <!-- Users (Admin Only) -->
                         @if(auth()->user()->role === 'admin')
                         <a href="{{ route('admin.users') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
                            Users
                         </a>
                         @endif
@@ -159,7 +158,7 @@
                 <!-- RIGHT SIDE: User Profile -->
                 <div class="flex items-center gap-4">
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center gap-3 pl-2 pr-5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors duration-300 shadow-sm">
+                        <button @click="open = !open" class="flex items-center gap-3 pl-2 pr-5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-colors duration-300 shadow-sm">
                             
                             <!-- Avatar -->
                             <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-gold to-yellow-600 flex items-center justify-center text-xs font-bold text-white shadow-inner border border-white/20 overflow-hidden">
