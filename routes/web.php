@@ -83,55 +83,39 @@ Route::middleware(['auth'])->group(function () {
 
 
 // ====================================================
-// 4. ADMIN DASHBOARD (Protected)
+// 4. ADMIN DASHBOARD (Role Protected)
 // ====================================================
 Route::middleware(['auth'])->group(function () {
 
-    // Overview
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    
-    // Student Management
-    Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
-    Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
-    Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
-
-    // Finance & Leads
-    Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
-    Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
-
-    // Settings
-    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
-    Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
-
-     // SHARED: Everyone can see the main dashboard & profile
+    // SHARED
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
-    // REGISTRAR ONLY (Applicants, Enrollments)
+    // REGISTRAR
     Route::middleware(['role:registrar,admin'])->group(function () {
         Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
         Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
         Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
     });
 
-    // CASHIER ONLY (Payments)
+    // CASHIER
     Route::middleware(['role:cashier,admin,registrar'])->group(function () {
-        // Note: Registrar often needs to see payments too, so I added them here
         Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
+        Route::post('/admin/payments', [AdminController::class, 'storePayment'])->name('admin.payments.store');
+        Route::post('/admin/payments/{id}/verify', [AdminController::class, 'verifyPayment'])->name('admin.payments.verify');
     });
 
-    // MARKETING ONLY (Leads)
+    // MARKETING
     Route::middleware(['role:marketing,admin,registrar'])->group(function () {
         Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
     });
 
-    // IT ADMIN ONLY (User Management - We will build this next)
+    // IT ADMIN
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
         Route::post('/admin/users', [AdminController::class, 'createUser'])->name('admin.users.create');
-
-         Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
     });
 
 });

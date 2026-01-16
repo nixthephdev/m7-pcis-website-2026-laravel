@@ -1,14 +1,3 @@
-Yes, let's apply that same **Premium Royal Blue Gradient** (`from-[#002855] to-[#00539C]`) to the Login Page background. This will make the entire system feel uniform and high-end.
-
-### Update `resources/views/admin/login.blade.php`
-
-**Replace the entire file with this version.**
-
-I have:
-1.  Applied the **Deep Royal Gradient** to the background.
-2.  Kept the **Glass Card** design but adjusted the colors to blend perfectly with this specific blue.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,4 +108,3 @@ I have:
 
 </body>
 </html>
-```

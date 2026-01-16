@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Lead;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\User;
+use App\Models\Payment;
 
 class AdminController extends Controller
 {
@@ -48,11 +49,8 @@ class AdminController extends Controller
     // 4. Dashboard
      public function dashboard()
     {
-        // Keep students as is (fetching all for the counters/stats)
-        $students = \App\Models\Enrollment::orderBy('created_at', 'desc')->get();
-        
-        // CHANGE THIS: Use paginate(5) instead of get()
-        $leads = \App\Models\Lead::orderBy('created_at', 'desc')->paginate(5);
+        $students = Enrollment::orderBy('created_at', 'desc')->get();
+        $leads = Lead::orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.dashboard', compact('students', 'leads'));
     }
@@ -77,10 +75,8 @@ class AdminController extends Controller
     // Show Applications List (With Search & Filter)
     public function applications(Request $request)
     {
-        // Use Eloquent Model (Enrollment::) instead of DB::table
-        $query = \App\Models\Enrollment::query();
+        $query = Enrollment::query();
 
-        // Search Logic
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -91,7 +87,6 @@ class AdminController extends Controller
             });
         }
 
-        // Filter by Status
         if ($request->has('status') && $request->status != 'all') {
             $query->where('status', $request->status);
         }
@@ -115,28 +110,21 @@ class AdminController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            // CHANGED: max:3072 (3MB)
             'avatar' => 'nullable|image|max:3072', 
             'password' => 'nullable|min:8|confirmed',
         ]);
 
-        // Update Basic Info
         $user->name = $request->name;
         $user->email = $request->email;
 
-        // Update Password
         if ($request->filled('password')) {
-            $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+            $user->password = Hash::make($request->password);
         }
 
-        // Update Avatar
         if ($request->hasFile('avatar')) {
-            // Delete old avatar
-            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+                Storage::disk('public')->delete($user->avatar);
             }
-            
-            // Store new avatar (High Quality)
             $path = $request->file('avatar')->store('avatars', 'public');
             $user->avatar = $path;
         }
@@ -146,46 +134,13 @@ class AdminController extends Controller
         return back()->with('success', 'Profile updated successfully!');
     }
 
-    public function payments(Request $request)
+    public function leads(Request $request)
     {
-        // Start Query
-        $query = \Illuminate\Support\Facades\DB::table('payments')
-            ->join('enrollments', 'payments.enrollment_id', '=', 'enrollments.id')
-            ->select('payments.*', 'enrollments.first_name', 'enrollments.last_name', 'enrollments.grade_level');
-
-        // Search Logic
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('enrollments.last_name', 'like', "%$search%")
-                  ->orWhere('payments.transaction_id', 'like', "%$search%");
-            });
-        }
-
-        // Filter by Status
-        if ($request->has('status') && $request->status != 'all') {
-            $query->where('payments.status', $request->status);
-        }
-
-        $payments = $query->orderBy('payments.created_at', 'desc')->paginate(10);
-
-        // Calculate Stats
-        $totalCollected = \Illuminate\Support\Facades\DB::table('payments')->where('status', 'paid')->sum('amount');
-        $pendingAmount = \Illuminate\Support\Facades\DB::table('payments')->where('status', 'pending')->sum('amount');
-
-        return view('admin.payments', compact('payments', 'totalCollected', 'pendingAmount'));
-    }
-
-   public function leads(Request $request)
-    {
-        // 1. Update the "Last Viewed" timestamp for the current user
-        // This resets the notification counter because we are viewing the page now.
         $user = auth()->user();
         $user->last_leads_viewed_at = now();
-        $user->save(); // Explicitly save
+        $user->save(); 
 
-        // 2. Fetch Data (Existing Logic)
-        $query = \App\Models\Lead::orderBy('created_at', 'desc');
+        $query = Lead::orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
             $search = $request->search;
@@ -197,8 +152,8 @@ class AdminController extends Controller
         }
 
         $leads = $query->paginate(10);
-        $totalLeads = \App\Models\Lead::count();
-        $todayLeads = \App\Models\Lead::whereDate('created_at', today())->count();
+        $totalLeads = Lead::count();
+        $todayLeads = Lead::whereDate('created_at', today())->count();
 
         return view('admin.leads', compact('leads', 'totalLeads', 'todayLeads'));
     }
@@ -207,8 +162,7 @@ class AdminController extends Controller
 
     public function users()
     {
-        // Fetch all users EXCEPT applicants (we only want to manage staff here)
-        $users = \App\Models\User::where('role', '!=', 'applicant')
+        $users = User::where('role', '!=', 'applicant')
                     ->orderBy('created_at', 'desc')
                     ->get();
 
@@ -224,12 +178,12 @@ class AdminController extends Controller
             'role' => 'required'
         ]);
 
-        \App\Models\User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
-            'avatar' => null // Optional
+            'avatar' => null 
         ]);
 
         return back()->with('success', 'New staff account created successfully!');
@@ -237,13 +191,60 @@ class AdminController extends Controller
 
     public function deleteUser($id)
     {
-        // Prevent deleting yourself
         if (auth()->id() == $id) {
             return back()->with('error', 'You cannot delete your own account.');
         }
 
-        \App\Models\User::destroy($id);
+        User::destroy($id);
         return back()->with('success', 'User deleted.');
     }
 
+    // --- PAYMENTS MODULE ---
+
+    public function payments()
+    {
+        // Get all payments with student info
+        $payments = Payment::with('enrollment')->latest()->paginate(10);
+        
+        // Get list of students for the "Add Payment" dropdown
+        $students = Enrollment::where('status', '!=', 'rejected')->get();
+
+        return view('admin.payments', compact('payments', 'students'));
+    }
+
+    public function storePayment(Request $request)
+    {
+        $request->validate([
+            'enrollment_id' => 'required',
+            'amount' => 'required|numeric',
+            'type' => 'required', 
+            'method' => 'required', 
+            'proof_file' => 'nullable|image|max:2048' 
+        ]);
+
+        $path = null;
+        if ($request->hasFile('proof_file')) {
+            $path = $request->file('proof_file')->store('receipts', 'public');
+        }
+
+        Payment::create([
+            'enrollment_id' => $request->enrollment_id,
+            'transaction_id' => 'TRX-' . strtoupper(uniqid()),
+            'amount' => $request->amount,
+            'type' => $request->type,
+            'method' => $request->method,
+            'status' => 'pending',
+            'proof_file' => $path
+        ]);
+
+        return back()->with('success', 'Payment recorded successfully!');
+    }
+
+    public function verifyPayment(Request $request, $id)
+    {
+        $payment = Payment::findOrFail($id);
+        $payment->update(['status' => $request->status]); 
+
+        return back()->with('success', 'Payment status updated.');
+    }
 }
