@@ -77,16 +77,17 @@ class AdminController extends Controller
     // Show Applications List (With Search & Filter)
     public function applications(Request $request)
     {
-        $query = Enrollment::query();
+        // Use Eloquent Model (Enrollment::) instead of DB::table
+        $query = \App\Models\Enrollment::query();
 
         // Search Logic
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
-                $q->where('first_name', 'like', "%$search%")
-                  ->orWhere('last_name', 'like', "%$search%")
-                  ->orWhere('email', 'like', "%$search%")
-                  ->orWhere('lrn', 'like', "%$search%");
+                $q->where('last_name', 'like', "%$search%")
+                  ->orWhere('first_name', 'like', "%$search%")
+                  ->orWhere('lrn', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%");
             });
         }
 
@@ -95,7 +96,7 @@ class AdminController extends Controller
             $query->where('status', $request->status);
         }
 
-        $students = $query->orderBy('created_at', 'desc')->paginate(10); // 10 per page
+        $students = $query->orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.applications', compact('students'));
     }
@@ -200,6 +201,49 @@ class AdminController extends Controller
         $todayLeads = \App\Models\Lead::whereDate('created_at', today())->count();
 
         return view('admin.leads', compact('leads', 'totalLeads', 'todayLeads'));
+    }
+
+    // --- USER MANAGEMENT (IT ONLY) ---
+
+    public function users()
+    {
+        // Fetch all users EXCEPT applicants (we only want to manage staff here)
+        $users = \App\Models\User::where('role', '!=', 'applicant')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+
+        return view('admin.users', compact('users'));
+    }
+
+    public function createUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'role' => 'required'
+        ]);
+
+        \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'avatar' => null // Optional
+        ]);
+
+        return back()->with('success', 'New staff account created successfully!');
+    }
+
+    public function deleteUser($id)
+    {
+        // Prevent deleting yourself
+        if (auth()->id() == $id) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+
+        \App\Models\User::destroy($id);
+        return back()->with('success', 'User deleted.');
     }
 
 }

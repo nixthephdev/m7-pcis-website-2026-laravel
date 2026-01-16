@@ -29,7 +29,8 @@
                             card: '#151e32', // Card Dark
                             gold: '#F4A300',
                             red: '#D72638',
-                            green: '#009245'
+                            green: '#009245',
+                            navy: '#101426' // The new Navy Color
                         }
                     },
                     boxShadow: {
@@ -56,55 +57,52 @@
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-[0.05]"></div>
     </div>
 
-    <!-- 1. TOP NAVIGATION -->
+    <!-- 1. TOP NAVIGATION (MATCHING NAVY BLUE) -->
     <nav x-data="{ open: false }" 
-         class="bg-gradient-to-r from-[#002855] via-[#00539C] to-[#002855] text-white shadow-lg sticky top-0 z-50 border-b border-white/10 relative">
+         class="bg-[#101426] text-white shadow-lg sticky top-0 z-50 border-b border-white/5 relative">
         
         <!-- Texture Overlay -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
-        
-        <!-- Glow Effect -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-full bg-white/5 blur-3xl pointer-events-none"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
 
         <!-- CENTERED CONTAINER -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 relative z-10 items-center">
                 
-                <!-- Left: Logo & Links -->
+                <!-- LEFT SIDE: Logo & Navigation Links -->
                 <div class="flex items-center gap-8">
                     <!-- Logo -->
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
                         <div class="relative">
-                            <div class="absolute inset-0 bg-white/20 rounded-full blur-md group-hover:blur-lg transition duration-500"></div>
+                            <div class="absolute inset-0 bg-white/10 rounded-full blur-md group-hover:blur-lg transition duration-500"></div>
                             <img src="{{ asset('images/logo.png') }}" class="relative h-9 w-auto drop-shadow-md transform group-hover:scale-105 transition" alt="Logo">
                         </div>
                         <div class="leading-tight">
                             <h1 class="font-royal font-bold text-lg text-white tracking-wide drop-shadow-md">
                                 M<span class="text-[#D72638]">7</span> PCIS
                             </h1>
-                            <p class="text-[9px] text-blue-100 uppercase tracking-[0.2em] font-semibold opacity-80">Registrar</p>
+                            <p class="text-[9px] text-blue-200 uppercase tracking-[0.2em] font-semibold opacity-80">Registrar</p>
                         </div>
                     </a>
 
                     <!-- Desktop Links -->
-                    <div class="hidden lg:flex items-center gap-6 ml-4">
+                    <div class="hidden lg:flex items-center gap-1 ml-4">
+                        
                         <!-- Dashboard -->
                         <a href="{{ route('admin.dashboard') }}" 
-                           class="text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.dashboard') ? 'text-white font-bold' : 'text-blue-200 hover:text-white' }}">
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
                            Dashboard
                         </a>
 
-                        <!-- Applicants (With Heartbeat Badge) -->
+                        <!-- Applicants (Registrar & Admin) -->
+                        @if(in_array(auth()->user()->role, ['admin', 'registrar']))
                         <a href="{{ route('admin.applications') }}" 
-                           class="relative text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.applications') ? 'text-white font-bold' : 'text-blue-200 hover:text-white' }}">
+                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.applications') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
                            Applicants
-                           
                            @php
                                $pendingCount = \App\Models\Enrollment::where('status', 'pending')->count();
                            @endphp
-                           
                            @if($pendingCount > 0)
-                               <span class="absolute -top-2 -right-4 flex h-4 w-4">
+                               <span class="absolute -top-1 -right-2 flex h-4 w-4">
                                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                                   <span class="relative inline-flex rounded-full h-4 w-4 bg-[#D72638] text-[9px] text-white font-bold items-center justify-center border border-white/20">
                                     {{ $pendingCount }}
@@ -112,25 +110,26 @@
                                 </span>
                            @endif
                         </a>
+                        @endif
 
-                        <!-- Payments -->
+                        <!-- Payments (Cashier, Registrar, Admin) -->
+                        @if(in_array(auth()->user()->role, ['admin', 'registrar', 'cashier']))
                         <a href="{{ route('admin.payments') }}" 
-                           class="text-sm font-medium transition-colors duration-200 {{ request()->routeIs('admin.payments') ? 'text-white font-bold' : 'text-blue-200 hover:text-white' }}">
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
                            Payments
                         </a>
+                        @endif
 
-                        <!-- Leads (Smart Notification) -->
+                        <!-- Leads (Marketing, Registrar, Admin) -->
+                        @if(in_array(auth()->user()->role, ['admin', 'registrar', 'marketing']))
                         <a href="{{ route('admin.leads') }}" 
-                           class="relative px-4 py-2 text-sm font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.leads') ? 'bg-white/10 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/5' }}">
+                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.leads') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
                            Leads
                            @php
-                               // Get the last time the user checked leads. Default to a long time ago if never checked.
-                               $lastViewed = auth()->user()->last_leads_viewed_at ?? \Carbon\Carbon::create(2000, 1, 1);
-                               
-                               // Count leads created AFTER that time
+                               $user = auth()->user();
+                               $lastViewed = $user->last_leads_viewed_at ?? '1970-01-01 00:00:00';
                                $newLeadsCount = \App\Models\Lead::where('created_at', '>', $lastViewed)->count();
                            @endphp
-                           
                            @if($newLeadsCount > 0)
                                <span class="absolute -top-1 -right-2 flex h-4 w-4">
                                   <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
@@ -140,21 +139,30 @@
                                 </span>
                            @endif
                         </a>
+                        @endif
 
                         <!-- Reports -->
-                        <a href="#" class="text-sm font-medium text-blue-200 hover:text-white transition-colors duration-200">
+                        <a href="#" class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 text-gray-400 hover:text-white hover:bg-white/5">
                            Reports
                         </a>
+
+                        <!-- Users (Admin Only) -->
+                        @if(auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.users') }}" 
+                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-white/10 text-white shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5' }}">
+                           Users
+                        </a>
+                        @endif
                     </div>
                 </div>
 
-                <!-- Right: User Profile -->
+                <!-- RIGHT SIDE: User Profile -->
                 <div class="flex items-center gap-4">
                     <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center gap-3 pl-2 pr-5 py-1.5 rounded-full bg-white/10 hover:bg-white/25 border border-white/10 transition-colors duration-300 shadow-sm">
+                        <button @click="open = !open" class="flex items-center gap-3 pl-2 pr-5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors duration-300 shadow-sm">
                             
                             <!-- Avatar -->
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-gold to-yellow-600 flex items-center justify-center text-xs font-bold text-white shadow-inner border border-white/20 overflow-hidden">
+                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-gold to-yellow-600 flex items-center justify-center text-xs font-bold text-white shadow-inner border border-white/20 overflow-hidden">
                                 @if(auth()->user()->avatar)
                                     <img src="{{ asset('storage/' . auth()->user()->avatar) }}?v={{ time() }}" class="w-full h-full object-cover">
                                 @else
@@ -164,7 +172,13 @@
                             
                             <div class="text-left hidden md:block">
                                 <p class="text-sm font-bold text-white leading-none">{{ auth()->user()->name }}</p>
-                                <p class="text-[10px] text-blue-200 leading-none mt-0.5 font-medium tracking-wide">Administrator</p>
+                                <p class="text-[10px] text-blue-200 leading-none mt-0.5 font-medium tracking-wide">
+                                    @if(auth()->user()->role == 'admin') IT Administrator
+                                    @elseif(auth()->user()->role == 'registrar') School Registrar
+                                    @elseif(auth()->user()->role == 'cashier') Cashier
+                                    @elseif(auth()->user()->role == 'marketing') Marketing
+                                    @else Staff @endif
+                                </p>
                             </div>
                             
                             <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>

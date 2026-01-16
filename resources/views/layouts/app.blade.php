@@ -144,7 +144,7 @@
                         <a href="{{ route('life') }}" class="hover:text-brand-blue hover:underline decoration-2 underline-offset-8 decoration-brand-gold transition py-2">Life @ PCIS</a>
                         <a href="{{ route('contact') }}" class="hover:text-brand-blue hover:underline decoration-2 underline-offset-8 decoration-brand-gold transition py-2">Contact</a>
                         
-                        <a href="{{ route('apply.form') }}" class="bg-brand-blue text-white px-5 py-2.5 rounded shadow-md hover:bg-[#003f75] hover:shadow-lg transition transform hover:-translate-y-0.5 font-bold tracking-wide ml-2 whitespace-nowrap border border-white/20 text-[11px]">
+                        <a href="{{ route('register') }}" class="bg-brand-blue text-white px-5 py-2.5 rounded shadow-md hover:bg-[#003f75] hover:shadow-lg transition transform hover:-translate-y-0.5 font-bold tracking-wide ml-2 whitespace-nowrap border border-white/20 text-[11px]">
                             Enroll Now
                         </a>
                     </div>

@@ -36,7 +36,7 @@
             
             <!-- Primary CTA: Deep Blue (#00539C) for Trust/Authority -->
             <!-- Shape: Rounded-Full (Pill) to match screenshot -->
-            <a href="{{ route('apply.form') }}" class="bg-brand-blue text-white px-10 py-4 rounded-full shadow-soft hover:bg-[#003f75] hover:scale-105 transition transform duration-300 font-sub font-bold text-lg tracking-wide border-2 border-brand-blue">
+            <a href="{{ route('register') }}" class="bg-brand-blue text-white px-10 py-4 rounded-full shadow-soft hover:bg-[#003f75] hover:scale-105 transition transform duration-300 font-sub font-bold text-lg tracking-wide border-2 border-brand-blue">
                 Discover PCIS — Unlock Your Child’s Potential
             </a>
             
@@ -109,7 +109,7 @@
 
         <!-- CTA BUTTON -->
         <div class="flex flex-col items-center gap-3">
-            <a href="{{ route('apply.form') }}" class="bg-brand-red text-white px-12 py-4 rounded-full shadow-soft hover:bg-[#b01b2e] hover:shadow-lg transition transform hover:-translate-y-1 font-sub font-bold text-lg tracking-wide border-2 border-white ring-4 ring-brand-red/20">
+            <a href="{{ route('register') }}" class="bg-brand-red text-white px-12 py-4 rounded-full shadow-soft hover:bg-[#b01b2e] hover:shadow-lg transition transform hover:-translate-y-1 font-sub font-bold text-lg tracking-wide border-2 border-white ring-4 ring-brand-red/20">
                 Book a Campus Tour – Only 12 Slots for 2025
             </a>
             <p class="text-gray-400 text-sm italic font-light mt-2">

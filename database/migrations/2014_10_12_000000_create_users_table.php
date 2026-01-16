@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+   public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -19,11 +19,16 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
+            // ADD THESE 3 LINES:
+            $table->string('role')->default('applicant'); // admin, applicant
+            $table->string('avatar')->nullable();
+            $table->timestamp('last_leads_viewed_at')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

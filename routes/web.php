@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EnrollmentController;
 use App\Http\Controllers\AdminController;
-use App\Livewire\EnrollmentWizard; // <--- This is the correct one
-
+use App\Http\Controllers\ApplicantAuthController;
+use App\Livewire\EnrollmentWizard; 
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,9 @@ use App\Livewire\EnrollmentWizard; // <--- This is the correct one
 |--------------------------------------------------------------------------
 */
 
-// --- PUBLIC PAGES ---
+// ====================================================
+// 1. PUBLIC PAGES (Website Frontend)
+// ====================================================
 Route::get('/', function () { return view('welcome'); })->name('home');
 Route::get('/about', function () { return view('about'); })->name('about');
 Route::get('/team', function () { return view('team'); })->name('team');
@@ -21,42 +23,107 @@ Route::get('/admissions', function () { return view('admissions'); })->name('adm
 Route::get('/life-at-pcis', function () { return view('life'); })->name('life');
 Route::get('/international-families', function () { return view('families'); })->name('families');
 Route::get('/contact', function () { return view('contact'); })->name('contact');
-// Download Fees Route (Global Header)
+
+// Lead Gen (Header Form)
 Route::post('/download-fees', [EnrollmentController::class, 'downloadFees'])->name('download.fees');
 
-// --- ENROLLMENT FORM ---
+// Legacy Apply Route (Kept to prevent errors, but flow is now via Register)
 Route::get('/apply', [EnrollmentController::class, 'index'])->name('apply.form');
 Route::post('/apply', [EnrollmentController::class, 'store'])->name('apply.submit');
 
-// --- ADMIN AUTHENTICATION ---
+
+// ====================================================
+// 2. AUTHENTICATION (Guest Routes)
+// ====================================================
+
+// Applicant / Parent Registration & Login
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [ApplicantAuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [ApplicantAuthController::class, 'register']);
+    
+    Route::get('/login', [ApplicantAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [ApplicantAuthController::class, 'login']);
+});
+
+// Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
 
-// *** THIS WAS MISSING ***
-Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout'); 
+// Shared Logout
+Route::post('/logout', [ApplicantAuthController::class, 'logout'])->name('logout');
+Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-// --- PROTECTED ADMIN DASHBOARD ---
+
+// ====================================================
+// 3. APPLICANT PORTAL (Protected)
+// ====================================================
 Route::middleware(['auth'])->group(function () {
     
-    // Dashboard
+    // Step 1: Policy Acceptance
+    Route::get('/applicant/policy', function () {
+        return view('applicant.policy');
+    })->name('applicant.policy');
+
+    // Step 2: Dashboard (Menu)
+    Route::get('/applicant/dashboard', function () {
+        return view('applicant.dashboard');
+    })->name('applicant.dashboard');
+
+    // Step 3: Application Form (Livewire Wizard)
+    Route::get('/applicant/form', EnrollmentWizard::class)->name('applicant.form');
+});
+
+
+// ====================================================
+// 4. ADMIN DASHBOARD (Protected)
+// ====================================================
+Route::middleware(['auth'])->group(function () {
+
+    // Overview
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
-    // Delete Student
-    Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
-    
-    // Update Status (Approve/Reject)
-    Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
-
-    // Add this inside the admin middleware group
+    // Student Management
     Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
+    Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
+    Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
 
-    // Profile Routes
+    // Finance & Leads
+    Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
+    Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
+
+    // Settings
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
-    Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
+     // SHARED: Everyone can see the main dashboard & profile
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
+    Route::post('/admin/profile', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
 
-    Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
+    // REGISTRAR ONLY (Applicants, Enrollments)
+    Route::middleware(['role:registrar,admin'])->group(function () {
+        Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
+        Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
+        Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
+    });
 
-    Route::get('/apply', EnrollmentWizard::class)->name('apply.form');
+    // CASHIER ONLY (Payments)
+    Route::middleware(['role:cashier,admin,registrar'])->group(function () {
+        // Note: Registrar often needs to see payments too, so I added them here
+        Route::get('/admin/payments', [AdminController::class, 'payments'])->name('admin.payments');
+    });
+
+    // MARKETING ONLY (Leads)
+    Route::middleware(['role:marketing,admin,registrar'])->group(function () {
+        Route::get('/admin/leads', [AdminController::class, 'leads'])->name('admin.leads');
+    });
+
+    // IT ADMIN ONLY (User Management - We will build this next)
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::post('/admin/users', [AdminController::class, 'createUser'])->name('admin.users.create');
+
+         Route::delete('/admin/users/{id}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+    });
+
 });
