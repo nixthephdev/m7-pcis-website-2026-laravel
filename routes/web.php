@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/applications', [AdminController::class, 'applications'])->name('admin.applications');
         Route::post('/admin/enrollment/{id}/status', [AdminController::class, 'updateStatus'])->name('admin.status');
         Route::delete('/admin/enrollment/{id}', [AdminController::class, 'destroy'])->name('admin.delete');
+
+        Route::get('/admin/enrollment/{id}/pdf', [AdminController::class, 'downloadPdf'])->name('admin.pdf');
     });
 
     // CASHIER

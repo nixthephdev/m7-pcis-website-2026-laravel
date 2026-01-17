@@ -106,10 +106,10 @@
                         <div class="relative w-full md:w-48">
                             <select name="level" required class="w-full h-10 px-4 rounded bg-white/10 border border-white/20 text-white text-sm focus:outline-none focus:bg-white focus:text-gray-900 focus:ring-2 focus:ring-brand-gold appearance-none cursor-pointer transition">
                                 <option value="" disabled selected class="text-gray-500">Select Grade Level</option>
-                                <option value="EYP" class="text-gray-900">IB Early Years</option>
-                                <option value="PYP" class="text-gray-900">IB Primary Years</option>
-                                <option value="MYP" class="text-gray-900">IB Middle Years</option>
-                                <option value="IBDP" class="text-gray-900">IB Diploma</option>
+                                <option value="EYP" class="text-gray-900">EYP (Nursery, Reception, KG)</option>
+                                <option value="PYP" class="text-gray-900">PYP (Years 1-5)</option>
+                                <option value="MYP" class="text-gray-900">MYP (Years 6-10)</option>
+                                <option value="IBDP" class="text-gray-900">IB Diploma Program (Senior High)</option>
                             </select>
                         </div>
                         <button type="submit" class="w-full md:w-auto h-10 px-6 bg-gradient-to-r from-brand-red to-[#b91c1c] text-white font-bold text-xs uppercase tracking-widest rounded shadow-lg hover:shadow-red-500/50 transition transform hover:-translate-y-0.5 border border-white/10">Get Fees</button>

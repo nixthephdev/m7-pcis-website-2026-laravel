@@ -108,17 +108,25 @@
                                         <div x-show="open" x-transition.scale class="inline-block bg-white dark:bg-[#151e32] rounded-2xl text-left overflow-hidden shadow-2xl transform transition-all sm:my-8 sm:max-w-6xl sm:w-full border border-gray-100 dark:border-white/10 relative">
                                             
                                             <!-- HEADER -->
-                                            <div class="bg-gradient-to-r from-[#002855] to-[#00539C] px-8 py-6 flex justify-between items-start text-white">
+                                            <div class="bg-gradient-to-r from-[#002855] to-[#00539C] px-8 py-6 flex justify-between items-center text-white">
                                                 <div>
                                                     <p class="text-[10px] font-bold uppercase tracking-widest text-blue-200 mb-1">Ref No: {{ $student->reference_no }}</p>
                                                     <h3 class="text-2xl font-royal font-bold">{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</h3>
                                                     <div class="flex gap-3 mt-2 text-xs font-medium">
                                                         <span class="bg-white/20 px-2 py-1 rounded">{{ $student->grade_level }}</span>
                                                         <span class="bg-white/20 px-2 py-1 rounded">{{ $student->applicant_type }}</span>
-                                                        <span class="bg-white/20 px-2 py-1 rounded">{{ $student->gender }}</span>
                                                     </div>
                                                 </div>
-                                                <button @click="open = false" class="text-white/50 hover:text-white text-2xl">×</button>
+                                                
+                                                <div class="flex items-center gap-4">
+                                                    <!-- DOWNLOAD PDF BUTTON -->
+                                                    <a href="{{ route('admin.pdf', $student->id) }}" class="flex items-center gap-2 bg-white text-[#00539C] px-4 py-2 rounded-lg text-xs font-bold shadow-lg hover:bg-blue-50 transition">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0l-4 4m4-4v12"></path></svg>
+                                                        Export PDF
+                                                    </a>
+
+                                                    <button @click="open = false" class="text-white/50 hover:text-white text-2xl">×</button>
+                                                </div>
                                             </div>
 
                                             <!-- BODY (Added dark:bg-[#0B1120]) -->

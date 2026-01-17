@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Payment;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -246,5 +247,17 @@ class AdminController extends Controller
         $payment->update(['status' => $request->status]); 
 
         return back()->with('success', 'Payment status updated.');
+    }
+
+      public function downloadPdf($id)
+    {
+        $student = \App\Models\Enrollment::findOrFail($id);
+        
+        $pdf = Pdf::loadView('pdf.application', compact('student'));
+        
+        // Setup paper size (A4)
+        $pdf->setPaper('a4', 'portrait');
+
+        return $pdf->download($student->last_name . '_' . $student->first_name . '_Application.pdf');
     }
 }

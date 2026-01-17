@@ -83,88 +83,127 @@
     </div>
 </div>
 
-<!-- SECTION 3: OUR FACULTY (Grid by Department) -->
-<div class="py-24 bg-white border-t border-gray-100">
-    <div class="max-w-[1400px] mx-auto px-4">
+<!-- SECTION 3: FACULTY DEPARTMENTS -->
+    <section class="py-24 bg-slate-50 relative overflow-hidden">
         
-        <div class="text-center mb-20">
-            <h2 class="text-4xl font-header font-bold text-brand-blue mb-4">Meet Our Educators</h2>
-            <p class="text-gray-600 font-light">Dedicated professionals committed to your child's success.</p>
-        </div>
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
 
-        <!-- ACADEMIC COUNCIL (Blue Theme) -->
-        <div class="mb-20">
-            <h3 class="text-2xl font-serif font-bold text-brand-blue mb-8 border-l-4 border-brand-blue pl-4">Academic Council</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <!-- Loop this block for each person -->
-                <div class="group">
-                    <div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-blue/20 group-hover:border-brand-blue transition duration-300 relative">
-                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-blue/90 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-3">
-                            <span class="text-white text-xs font-bold">Ms. Elena Cruz<br><span class="font-light text-[10px]">Director</span></span>
+        <div class="max-w-[1400px] mx-auto px-6 relative z-10">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-[#00539C] font-royal font-bold text-3xl md:text-4xl mb-4">Our Faculty & Staff</h2>
+                <div class="h-1 w-24 bg-[#D72638] mx-auto rounded-full"></div>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto">
+                    A community of dedicated educators committed to shaping the future of our students.
+                </p>
+            </div>
+
+            <!-- DEPARTMENTS GRID -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- CARD 1: ACADEMIC COUNCIL -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Academic Council
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <!-- Replace src with actual images -->
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                        </div>
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm group">
+                            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                         </div>
                     </div>
                 </div>
-                <!-- Duplicate for demo (Remove later) -->
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-blue/20 group-hover:border-brand-blue transition duration-300 relative"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-blue/20 group-hover:border-brand-blue transition duration-300 relative"><img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-            </div>
-        </div>
 
-        <!-- PRIMARY YEARS (PYP) - Yellow Theme -->
-        <div class="mb-20">
-            <h3 class="text-2xl font-serif font-bold text-[#b47800] mb-8 border-l-4 border-brand-gold pl-4">Primary Years Programme (PYP)</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <!-- Person -->
-                <div class="group">
-                    <div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-gold/20 group-hover:border-brand-gold transition duration-300 relative">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-brand-gold/90 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-3">
-                            <span class="text-white text-xs font-bold">Ms. Sarah Lee<br><span class="font-light text-[10px]">Grade 1 Adviser</span></span>
+                <!-- CARD 2: EARLY YEARS (EYP) -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Early Years (EYP)
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        @for($i = 0; $i < 9; $i++)
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm bg-slate-100 group">
+                            <img src="https://i.pravatar.cc/300?img={{ $i + 10 }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-500">
                         </div>
+                        @endfor
                     </div>
                 </div>
-                <!-- Duplicates for demo -->
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-gold/20 group-hover:border-brand-gold transition duration-300 relative"><img src="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-gold/20 group-hover:border-brand-gold transition duration-300 relative"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-gold/20 group-hover:border-brand-gold transition duration-300 relative"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-            </div>
-        </div>
 
-        <!-- MIDDLE YEARS (MYP) - Teal Theme -->
-        <div class="mb-20">
-            <h3 class="text-2xl font-serif font-bold text-brand-teal mb-8 border-l-4 border-brand-teal pl-4">Middle Years Programme (MYP)</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <!-- Person -->
-                <div class="group">
-                    <div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-teal/20 group-hover:border-brand-teal transition duration-300 relative">
-                        <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <!-- CARD 3: PRIMARY YEARS (PYP) -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Primary Years (PYP)
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        @for($i = 0; $i < 9; $i++)
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm bg-slate-100 group">
+                            <img src="https://i.pravatar.cc/300?img={{ $i + 20 }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-500">
+                        </div>
+                        @endfor
                     </div>
                 </div>
-                <!-- Duplicates -->
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-teal/20 group-hover:border-brand-teal transition duration-300 relative"><img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-teal/20 group-hover:border-brand-teal transition duration-300 relative"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-            </div>
-        </div>
 
-        <!-- DIPLOMA (DP) - Red Theme -->
-        <div class="mb-20">
-            <h3 class="text-2xl font-serif font-bold text-brand-red mb-8 border-l-4 border-brand-red pl-4">Diploma Programme (DP)</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <!-- Person -->
-                <div class="group">
-                    <div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-red/20 group-hover:border-brand-red transition duration-300 relative">
-                        <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                <!-- CARD 4: MIDDLE YEARS (MYP) -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Middle Years (MYP)
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        @for($i = 0; $i < 9; $i++)
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm bg-slate-100 group">
+                            <img src="https://i.pravatar.cc/300?img={{ $i + 30 }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-500">
+                        </div>
+                        @endfor
                     </div>
                 </div>
-                <!-- Duplicates -->
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-red/20 group-hover:border-brand-red transition duration-300 relative"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
-                <div class="group"><div class="aspect-square overflow-hidden rounded-xl shadow-md border-2 border-brand-red/20 group-hover:border-brand-red transition duration-300 relative"><img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div></div>
+
+                <!-- CARD 5: DIPLOMA PROGRAMME (DP) -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Diploma Programme (DP)
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        @for($i = 0; $i < 6; $i++)
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm bg-slate-100 group">
+                            <img src="https://i.pravatar.cc/300?img={{ $i + 40 }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-500">
+                        </div>
+                        @endfor
+                    </div>
+                </div>
+
+                <!-- CARD 6: ADMIN & SUPPORT -->
+                <div class="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 p-8 hover:-translate-y-2 transition-transform duration-500">
+                    <h3 class="text-center font-royal font-bold text-[#00539C] text-lg mb-8 tracking-widest uppercase border-b border-slate-100 pb-4">
+                        Admin & Support
+                    </h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        @for($i = 0; $i < 6; $i++)
+                        <div class="aspect-square rounded-2xl overflow-hidden shadow-sm bg-slate-100 group">
+                            <img src="https://i.pravatar.cc/300?img={{ $i + 50 }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition duration-500">
+                        </div>
+                        @endfor
+                    </div>
+                </div>
+
             </div>
         </div>
-
-    </div>
-</div>
+    </section>
 
 <!-- SECTION 4: COFFEE CHAT CTA (HIMAY: Cognitive Ease & Low Friction) -->
 <div class="bg-white py-24 text-center border-t border-gray-50">
