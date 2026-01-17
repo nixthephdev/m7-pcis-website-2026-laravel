@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' }" 
       x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))"
@@ -10,8 +11,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
     
-    <!-- PREMIUM FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- FONTS: Figtree & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -19,22 +22,17 @@
             theme: {
                 extend: {
                     fontFamily: { 
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['"Figtree"', 'sans-serif'], 
                         royal: ['"Cinzel"', 'serif'] 
                     },
                     colors: {
                         brand: {
-                            blue: '#00539C', // Royal Blue
-                            dark: '#0B1120', // Deep Navy
-                            card: '#151e32', // Card Dark
+                            blue: '#00539C', 
+                            dark: '#002855', 
+                            navy: '#101426', 
                             gold: '#F4A300',
                             red: '#D72638',
-                            green: '#009245'
                         }
-                    },
-                    boxShadow: {
-                        'glow': '0 0 20px rgba(0, 83, 156, 0.15)',
-                        'card': '0 2px 10px rgba(0, 0, 0, 0.03)',
                     }
                 }
             }
@@ -42,168 +40,132 @@
     </script>
     <style>
         [x-cloak] { display: none !important; }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.8); }
     </style>
 </head>
-<body class="bg-[#F8FAFC] dark:bg-[#020617] font-sans text-slate-600 dark:text-slate-300 transition-colors duration-300 min-h-screen flex flex-col relative">
+<body class="bg-gray-100 dark:bg-[#020617] font-sans text-slate-600 dark:text-slate-300 antialiased min-h-screen flex flex-col transition-colors duration-300">
 
-    <!-- BACKGROUND MESH -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-blue-50/50 to-transparent dark:from-brand-blue/10 dark:to-transparent"></div>
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03] dark:opacity-[0.05]"></div>
-    </div>
-
-    <!-- 1. TOP NAVIGATION (PREMIUM ROYAL BLUE GRADIENT) -->
+    <!-- 1. NAVBAR (Royal Blue Gradient) -->
     <nav x-data="{ open: false }" 
-         class="bg-gradient-to-r from-[#002855] to-[#00539C] text-white shadow-lg sticky top-0 z-50 border-b border-white/10 relative">
+         class="bg-gradient-to-r from-[#002855] via-[#00539C] to-[#002855] border-b border-white/10 shadow-lg sticky top-0 z-50">
         
-        <!-- Texture Overlay -->
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay pointer-events-none"></div>
-
-        <!-- CENTERED CONTAINER -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 relative z-10 items-center">
+            <div class="flex justify-between h-16">
                 
-                <!-- LEFT SIDE: Logo & Navigation Links -->
-                <div class="flex items-center gap-8">
+                <!-- LEFT: Logo & Links -->
+                <div class="flex">
                     <!-- Logo -->
-                    <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
-                        <div class="relative">
-                            <div class="absolute inset-0 bg-white/20 rounded-full blur-md group-hover:blur-lg transition duration-500"></div>
-                            <img src="{{ asset('images/logo.png') }}" class="relative h-9 w-auto drop-shadow-md transform group-hover:scale-105 transition" alt="Logo">
-                        </div>
-                        <div class="leading-tight">
-                            <h1 class="font-royal font-bold text-lg text-white tracking-wide drop-shadow-md">
-                                M<span class="text-[#D72638]">7</span> PCIS
-                            </h1>
-                            <p class="text-[9px] text-blue-100 uppercase tracking-[0.2em] font-semibold opacity-80">Registrar</p>
-                        </div>
-                    </a>
+                    <div class="shrink-0 flex items-center">
+                        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 group">
+                            <img src="{{ asset('images/logo.png') }}" class="block h-10 w-auto drop-shadow-md transition transform group-hover:scale-105" alt="Logo">
+                            <div class="hidden lg:block leading-tight">
+                                <h1 class="text-white font-royal font-bold text-lg tracking-wide">M7 PCIS</h1>
+                                <p class="text-[9px] text-blue-200 uppercase font-bold tracking-wider opacity-80">Registrar Portal</p>
+                            </div>
+                        </a>
+                    </div>
 
-                    <!-- Desktop Links -->
-                    <div class="hidden lg:flex items-center gap-1 ml-4">
-                        
-                        <!-- Dashboard -->
+                    <!-- Navigation Links -->
+                    <div class="hidden sm:-my-px sm:ms-12 sm:flex space-x-10">
                         <a href="{{ route('admin.dashboard') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.dashboard') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
-                           Dashboard
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out {{ request()->routeIs('admin.dashboard') ? 'border-brand-gold text-white' : 'border-transparent text-blue-100 hover:text-white hover:border-blue-300' }}">
+                            Dashboard
                         </a>
 
-                        <!-- Applicants (Registrar & Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar']))
                         <a href="{{ route('admin.applications') }}" 
-                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.applications') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
-                           Applicants
-                           @php
-                               $pendingCount = \App\Models\Enrollment::where('status', 'pending')->count();
-                           @endphp
-                           @if($pendingCount > 0)
-                               <span class="absolute -top-1 -right-2 flex h-4 w-4">
-                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                  <span class="relative inline-flex rounded-full h-4 w-4 bg-[#D72638] text-[9px] text-white font-bold items-center justify-center border border-white/20">
-                                    {{ $pendingCount }}
-                                  </span>
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out relative {{ request()->routeIs('admin.applications') ? 'border-brand-gold text-white' : 'border-transparent text-blue-100 hover:text-white hover:border-blue-300' }}">
+                            Applicants
+                            @php $pendingCount = \App\Models\Enrollment::where('status', 'pending')->count(); @endphp
+                            @if($pendingCount > 0)
+                                <span class="absolute top-3 -right-3 flex h-4 w-4">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-4 w-4 bg-[#D72638] text-[9px] text-white font-bold items-center justify-center ring-1 ring-white/20">
+                                        {{ $pendingCount }}
+                                    </span>
                                 </span>
-                           @endif
+                            @endif
                         </a>
                         @endif
 
-                        <!-- Payments (Cashier, Registrar, Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar', 'cashier']))
                         <a href="{{ route('admin.payments') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.payments') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
-                           Payments
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out {{ request()->routeIs('admin.payments') ? 'border-brand-gold text-white' : 'border-transparent text-blue-100 hover:text-white hover:border-blue-300' }}">
+                            Payments
                         </a>
                         @endif
 
-                        <!-- Leads (Marketing, Registrar, Admin) -->
                         @if(in_array(auth()->user()->role, ['admin', 'registrar', 'marketing']))
                         <a href="{{ route('admin.leads') }}" 
-                           class="relative px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.leads') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
-                           Leads
-                           @php
-                               $user = auth()->user();
-                               $lastViewed = $user->last_leads_viewed_at ?? '1970-01-01 00:00:00';
-                               $newLeadsCount = \App\Models\Lead::where('created_at', '>', $lastViewed)->count();
-                           @endphp
-                           @if($newLeadsCount > 0)
-                               <span class="absolute -top-1 -right-2 flex h-4 w-4">
-                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                                  <span class="relative inline-flex rounded-full h-4 w-4 bg-[#D72638] text-[9px] text-white font-bold items-center justify-center border border-white/20">
-                                    {{ $newLeadsCount }}
-                                  </span>
-                                </span>
-                           @endif
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out {{ request()->routeIs('admin.leads') ? 'border-brand-gold text-white' : 'border-transparent text-blue-100 hover:text-white hover:border-blue-300' }}">
+                            Leads
                         </a>
                         @endif
 
-                        <!-- Reports -->
-                        <a href="#" class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 text-blue-100 hover:text-white hover:bg-white/10">
-                           Reports
-                        </a>
-
-                        <!-- Users (Admin Only) -->
                         @if(auth()->user()->role === 'admin')
                         <a href="{{ route('admin.users') }}" 
-                           class="px-4 py-2 text-xs font-bold rounded-lg transition-all duration-200 {{ request()->routeIs('admin.users') ? 'bg-white/20 text-white shadow-inner' : 'text-blue-100 hover:text-white hover:bg-white/10' }}">
-                           Users
+                           class="inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 transition duration-150 ease-in-out {{ request()->routeIs('admin.users') ? 'border-brand-gold text-white' : 'border-transparent text-blue-100 hover:text-white hover:border-blue-300' }}">
+                            Users
                         </a>
                         @endif
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE: User Profile -->
-                <div class="flex items-center gap-4">
-                    <div x-data="{ open: false }" class="relative">
-                        <button @click="open = !open" class="flex items-center gap-3 pl-2 pr-5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-colors duration-300 shadow-sm">
+                <!-- RIGHT: Profile Dropdown (TRANSPARENT GLASS STYLE) -->
+                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                        
+                        <!-- The Pill Button (Updated to be Transparent/Glassy) -->
+                        <button @click="open = !open" 
+                                class="flex items-center pl-1.5 pr-4 py-1.5 rounded-full border border-white/10 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all duration-200 shadow-sm group">
                             
                             <!-- Avatar -->
-                            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-brand-gold to-yellow-600 flex items-center justify-center text-xs font-bold text-white shadow-inner border border-white/20 overflow-hidden">
-                                @if(auth()->user()->avatar)
-                                    <img src="{{ asset('storage/' . auth()->user()->avatar) }}?v={{ time() }}" class="w-full h-full object-cover">
-                                @else
-                                    {{ substr(auth()->user()->name, 0, 1) }}
-                                @endif
+                            <div class="mr-3">
+                                <div class="h-9 w-9 rounded-full bg-gradient-to-br from-blue-300 to-blue-600 p-[2px]">
+                                    <div class="h-full w-full rounded-full bg-[#002855] flex items-center justify-center overflow-hidden">
+                                        @if(auth()->user()->avatar)
+                                            <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="h-full w-full object-cover">
+                                        @else
+                                            <span class="text-xs font-bold text-white">{{ substr(auth()->user()->name, 0, 1) }}</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
-                            
+
+                            <!-- Text Info -->
                             <div class="text-left hidden md:block">
                                 <p class="text-sm font-bold text-white leading-none">{{ auth()->user()->name }}</p>
-                                <p class="text-[10px] text-blue-200 leading-none mt-0.5 font-medium tracking-wide">
+                                <p class="text-[10px] font-bold text-blue-200 uppercase tracking-wider mt-0.5">
                                     @if(auth()->user()->role == 'admin') IT Administrator
                                     @elseif(auth()->user()->role == 'registrar') School Registrar
                                     @elseif(auth()->user()->role == 'cashier') Cashier
-                                    @elseif(auth()->user()->role == 'marketing') Marketing
                                     @else Staff @endif
                                 </p>
                             </div>
-                            
-                            <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+
+                            <!-- Chevron -->
+                            <div class="ml-4 text-blue-300 group-hover:text-white transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
                         </button>
-                        
-                        <!-- Dropdown Content -->
-                        <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-60 bg-white dark:bg-[#151e32] rounded-xl shadow-2xl border border-gray-100 dark:border-white/5 py-2 z-50 origin-top-right ring-1 ring-black/5 animate-fade-in-down">
-                            <div class="px-5 py-3 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
-                                <p class="text-sm font-bold text-slate-800 dark:text-white">Signed in as</p>
-                                <p class="text-xs text-slate-500 truncate mt-0.5">{{ auth()->user()->email }}</p>
+
+                        <!-- Dropdown Menu -->
+                        <div x-show="open" x-cloak 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="transform opacity-0 scale-95"
+                             x-transition:enter-end="transform opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="transform opacity-100 scale-100"
+                             x-transition:leave-end="transform opacity-0 scale-95"
+                             class="absolute z-50 mt-2 w-56 rounded-xl shadow-2xl origin-top-right right-0 bg-white dark:bg-[#151e32] border border-gray-100 dark:border-white/10 py-1">
+                            <div class="px-4 py-3 border-b border-gray-100 dark:border-white/5 bg-gray-50/50 dark:bg-white/5">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Account</p>
+                                <p class="text-sm font-bold text-gray-800 dark:text-white truncate mt-1">{{ auth()->user()->email }}</p>
                             </div>
-                            <div class="py-2">
-                                <a href="{{ route('admin.profile') }}" class="flex items-center gap-3 px-5 py-2.5 text-xs font-medium text-slate-600 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-white/5 hover:text-brand-blue dark:hover:text-white transition">
-                                    <div class="w-5 h-5 rounded bg-blue-100 dark:bg-blue-900/30 text-brand-blue dark:text-blue-400 flex items-center justify-center"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></div>
-                                    Profile Settings
-                                </a>
-                            </div>
-                            <div class="border-t border-gray-100 dark:border-white/5 py-2 px-2">
-                                <form method="POST" action="{{ route('admin.logout') }}">
-                                    @csrf
-                                    <button class="flex w-full items-center gap-3 px-5 py-2.5 text-xs font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition group">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                                        Sign Out
-                                    </button>
-                                </form>
-                            </div>
+                            <a href="{{ route('admin.profile') }}" class="block px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-brand-blue dark:hover:text-white transition">Profile Settings</a>
+                            <form method="POST" action="{{ route('admin.logout') }}">
+                                @csrf
+                                <button type="submit" class="block w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition">Log Out</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -211,25 +173,25 @@
         </div>
     </nav>
 
-    <!-- 2. MAIN CONTENT (Centered max-w-7xl) -->
-    <main class="flex-grow py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
-        <!-- Page Title -->
-        <div class="mb-8 flex items-end justify-between">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-800 dark:text-white tracking-tight">@yield('header')</h2>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1 font-medium">@yield('subheader', now()->format('l, F j, Y'))</p>
-            </div>
+    <!-- 2. EXECUTIVE HEADER BAR -->
+    <header class="bg-white dark:bg-[#101426] shadow border-b border-gray-200 dark:border-white/5 relative z-40 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <h2 class="font-bold text-xl text-gray-800 dark:text-white leading-tight tracking-wide font-sans">
+                @yield('header')
+            </h2>
         </div>
+    </header>
 
+    <!-- 3. MAIN CONTENT -->
+    <main class="flex-grow py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full relative z-10">
         @yield('content')
     </main>
-    
 
-    <!-- 3. DARK MODE TOGGLE (Floating Glass) -->
+    <!-- 4. DARK MODE TOGGLE -->
     <button @click="darkMode = !darkMode" 
-            class="fixed bottom-8 right-8 z-50 p-3.5 rounded-full bg-white/80 dark:bg-[#1e293b]/80 backdrop-blur-md shadow-2xl border border-white/20 text-slate-500 dark:text-white hover:scale-110 transition-all duration-300 group">
-        <svg x-show="darkMode" class="w-5 h-5 text-brand-gold animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-        <svg x-show="!darkMode" class="w-5 h-5 text-brand-blue group-hover:rotate-12 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            class="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-[#1E253E] shadow-xl border border-gray-200 dark:border-white/10 text-gray-500 dark:text-white hover:scale-110 transition-transform duration-200 group">
+        <svg x-show="darkMode" class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg x-show="!darkMode" class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
     </button>
 
 </body>
