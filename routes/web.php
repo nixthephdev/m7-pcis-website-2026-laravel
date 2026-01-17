@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicantAuthController;
 use App\Livewire\EnrollmentWizard; 
 use App\Http\Controllers\ApplicantPasswordResetController;
+use App\Http\Controllers\AdminPasswordResetController;
 
 
 /*
@@ -46,6 +47,20 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [ApplicantAuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [ApplicantAuthController::class, 'login']);
 });
+
+// ADMIN FORGOT PASSWORD ROUTES
+Route::prefix('admin')->group(function () {
+    Route::get('forgot-password', [AdminPasswordResetController::class, 'showLinkRequestForm'])->name('admin.password.request');
+    Route::post('forgot-password', [AdminPasswordResetController::class, 'sendResetLinkEmail'])->name('admin.password.email');
+    
+    // Note: The email link will point here. 
+    // Laravel default email uses route('password.reset'). 
+    // For simplicity, we can reuse the generic reset route or override the email.
+    // For now, we will create a specific admin reset view:
+    Route::get('reset-password/{token}', [AdminPasswordResetController::class, 'showResetForm'])->name('admin.password.reset');
+    Route::post('reset-password', [AdminPasswordResetController::class, 'reset'])->name('admin.password.update');
+});
+
 
 // Admin Login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
